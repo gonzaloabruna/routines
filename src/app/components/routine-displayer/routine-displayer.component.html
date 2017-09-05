@@ -1,0 +1,15 @@
+<div class="routineDisplayer">
+    <ng-template ngFor let-routineItem [ngForOf]="listRoutines" let-routineIndex="index">
+        <div>
+            <routine-item [routineOrder]="routineItem.routineOrder" [routineName]="routineItem.routineName" [routineDuration]="routineItem.routineDuration" [routineDescription]="routineItem.routineDescription" [routineUrl]="routineItem.routineUrl" (progressUpdated)="recalculateTotalProgress($event)"></routine-item>
+        </div>
+    </ng-template>
+    <div class="totalProgress">
+        <div>
+            TOTAL to do: {{totalMinsToStudy}} min
+        </div>
+        <div>
+            PROGRESS DONE: {{roundedProgressInMin}} min {{progressInPercentage}} %
+        </div>
+    </div>
+</div>

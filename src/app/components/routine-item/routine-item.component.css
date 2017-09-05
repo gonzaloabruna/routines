@@ -1,0 +1,40 @@
+.routineItem {
+    display: inline-flex;
+    width: 70%;
+}
+
+.routineItem > div {
+    padding: 10px;
+    padding: 10px;
+}
+
+.routineOrder {
+    width: 5%;
+}
+
+.routineName {
+    width: 20%;
+}
+
+.routineDescription {
+    width: 35%;
+}
+
+.routineDuration {
+    width: 5%;
+}
+
+.routineActions {
+    width: 5%;
+}
+
+.startRoutineButton {
+}
+
+.stopRoutineButton {
+
+}
+
+.routineProgress {
+    width: 10%;
+}

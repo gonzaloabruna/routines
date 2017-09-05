@@ -1,0 +1,19 @@
+<div class="ramdomKeysContainer">
+    <div class="keysTitle">
+        Generate Random Keys to Practice scales, chords, progressions, licks...
+    </div>
+
+    <div class="randomSelection">
+        <select [(ngModel)]="specialProgression" (change)="generateKeys()">
+            <option *ngFor="let iOption of randomOptions" [ngValue]="iOption">{{iOption}}</option>
+        </select>
+    </div>
+
+    <div class="randomKeysActions">
+        <button (click)="generateKeys()" class="generateButton">GENERATE</button>
+    </div>
+
+    <div class="keysDisplayer">
+        {{keysArray}}
+    </div>
+</div>
