@@ -1,0 +1,10 @@
+<div class="routineManager">
+    -- ROUTINE ITEM MANAGER --
+    <ng-template ngFor let-iRoutineItem [ngForOf]="routineItems" let-routineItemIndex="index">
+        <div>
+            <routine-item [routineItem]="iRoutineItem"></routine-item>
+        </div>
+    </ng-template>
+
+    <routine-item-creator></routine-item-creator>
+</div>

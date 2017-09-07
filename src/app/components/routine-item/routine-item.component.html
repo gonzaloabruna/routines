@@ -1,26 +1,12 @@
 <div class="routineItem">
-    <div class="routineOrder">
-        #{{routineOrder}}
-    </div>
-
-    <div class="routineName">
-        {{routineName}}
-    </div>
-
-    <div class="routineDescription">
-        {{routineDescription}}
-    </div>
-
-    <div class="routineDuration">
-        {{routineDuration}} min
-    </div>
-
-    <div class="routineActions">
-        <button (click)="startRoutine()" class="startRoutineButton" *ngIf="!startTime">START</button>
-        <button (click)="stopRoutine()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
-    </div>
-
-    <div class="routineProgress">
-        {{roundedTotalDuration}} min / {{percentageProgress}} %
-    </div>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="routineItem.name" name="name" #name="ngModel">
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+              Name is required
+            </div>
+        </div>
+    </form>
 </div>

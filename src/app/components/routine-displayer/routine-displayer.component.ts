@@ -1,9 +1,9 @@
 /**
 TO-DO LIST:
 
-2) Storing the data for today's thing (do not lose it when refreshing)
-3) Using a database to save historic data
+3) Managing routines
 4) Colors and improved UI
+2) Adding route of api to config files
 5) Mobile friendly
 6) Deploy to heroku
 7) Swipe to left/right
@@ -13,73 +13,36 @@ TO-DO LIST:
 
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
+import { ApiService } from '../../services/api.service';
+
+import { ITaskModel } from '../../interfaces/taskModel.interface';
+import { IRoutineItemModel } from '../../interfaces/routineItemModel.interface';
+
 @Component({
     selector: 'routine-displayer',
     templateUrl: 'routine-displayer.component.html',
     styleUrls: ['routine-displayer.component.css']
 })
 
-export class RoutineDisplayerComponent {
+export class RoutineDisplayerComponent implements OnInit {
     private progressInMin = 0;
 
-    listRoutines: Array<IRoutineModel> = [];
+    listTasks: Array<ITaskModel> = [];
     roundedProgressInMin = 0; // Total progress in minutes, sum of all routines
     progressInPercentage = 0;
     totalMinsToStudy = 0;
 
-    constructor() {
-        const routine1: IRoutineModel = {
-            routineOrder: 1,
-            routineName: 'Fretboard & CAGED positions',
-            routineDuration: 10,
-            routineDescription: 'Fretboard Logic or Fretboard Freedom',
-            tags: ['scales', 'chords', 'tempo', 'licks']
-        };
+    constructor(private apiService: ApiService) { }
 
-        const routine2: IRoutineModel = {
-            routineOrder: 2,
-            routineName: 'Standard Notation Reading',
-            routineDuration: 20,
-            routineDescription: 'Standard Notation Reading',
-            tags: ['reading', 'tempo']
-        };
-
-        const routine3: IRoutineModel = {
-            routineOrder: 3,
-            routineName: 'Guitar Rhythms',
-            routineDuration: 15,
-            routineDescription: 'Rhythm Guitar Book - 365',
-            tags: ['rhythm', 'tempo']
-        };
-
-        const routine4: IRoutineModel = {
-            routineOrder: 4,
-            routineName: 'Guitar Aerobics',
-            routineDuration: 15,
-            routineDescription: 'Guitar Aerobics book',
-            tags: ['licks', 'tempo', 'technique']
-        };
-
-        const routine5: IRoutineModel = {
-            routineOrder: 5,
-            routineName: 'Ear training',
-            routineDuration: 30,
-            routineDescription: 'Justin Guitar Transcriptions / Songs Transcriptions',
-            tags: ['ear training', 'licks']
-        };
-
-        const routine6: IRoutineModel = {
-            routineOrder: 6,
-            routineName: 'Songs / Repertoire',
-            routineDuration: 30,
-            routineDescription: 'The Reeds Songs / Truefire Courses / Songbooks',
-            tags: ['repertoire', 'licks']
-        };
-
-        this.listRoutines = [routine1, routine2, routine3, routine4, routine5, routine6];
-
-        this.totalMinsToStudy = this.listRoutines.map((iRoutine) => { return iRoutine.routineDuration; })
-                                                .reduce((accumulator: number, currentVal: number) => { return accumulator + currentVal; });
+    ngOnInit(): void {
+        this.apiService.getTodayTasks().then((todayTasks: Array<ITaskModel>) => {
+            this.listTasks = todayTasks;
+            this.totalMinsToStudy = this.listTasks.map((iRoutine) => { return iRoutine.duration; })
+                .reduce((accumulator: number, currentVal: number) => { return accumulator + currentVal; });
+        }).catch((error) => {
+            // TODO handle error
+            console.log(error);
+        });
     }
 
     recalculateTotalProgress(newProgress: number): void {
@@ -90,13 +53,4 @@ export class RoutineDisplayerComponent {
             this.progressInPercentage = Number(this.progressInPercentage.toFixed(2));
         }
     }
-}
-
-export interface IRoutineModel {
-    routineOrder: number;
-    routineName: string;
-    routineDuration: number;
-    routineDescription: string;
-    routineUrl?: string;
-    tags?: Array<string>;
 }

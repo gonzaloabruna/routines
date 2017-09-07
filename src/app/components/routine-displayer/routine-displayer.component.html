@@ -1,7 +1,7 @@
 <div class="routineDisplayer">
-    <ng-template ngFor let-routineItem [ngForOf]="listRoutines" let-routineIndex="index">
+    <ng-template ngFor let-iTask [ngForOf]="listTasks" let-taskIndex="index">
         <div>
-            <routine-item [routineOrder]="routineItem.routineOrder" [routineName]="routineItem.routineName" [routineDuration]="routineItem.routineDuration" [routineDescription]="routineItem.routineDescription" [routineUrl]="routineItem.routineUrl" (progressUpdated)="recalculateTotalProgress($event)"></routine-item>
+            <task [task]="iTask" (progressUpdated)="recalculateTotalProgress($event)"></task>
         </div>
     </ng-template>
     <div class="totalProgress">

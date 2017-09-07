@@ -1,0 +1,26 @@
+<div class="taskItem">
+    <div class="taskOrder">
+        #{{task.order}}
+    </div>
+
+    <div class="taskName">
+        {{task.name}}
+    </div>
+
+    <div class="taskDescription">
+        {{task.description}}
+    </div>
+
+    <div class="taskDuration">
+        {{task.duration}} min
+    </div>
+
+    <div class="taskActions">
+        <button (click)="startTask()" class="startRoutineButton" *ngIf="!startTime">START</button>
+        <button (click)="stopTask()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
+    </div>
+
+    <div class="taskProgress">
+        {{roundedTotalDuration}} min / {{percentageProgress}} %
+    </div>
+</div>

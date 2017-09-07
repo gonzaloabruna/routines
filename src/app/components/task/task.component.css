@@ -1,0 +1,40 @@
+.taskItem {
+    display: inline-flex;
+    width: 70%;
+}
+
+.taskItem > div {
+    padding: 10px;
+    padding: 10px;
+}
+
+.taskOrder {
+    width: 5%;
+}
+
+.taskName {
+    width: 20%;
+}
+
+.taskDescription {
+    width: 35%;
+}
+
+.taskDuration {
+    width: 5%;
+}
+
+.taskActions {
+    width: 5%;
+}
+
+.startTaskButton {
+}
+
+.stopTaskButton {
+
+}
+
+.taskProgress {
+    width: 10%;
+}

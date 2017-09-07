@@ -5,19 +5,19 @@ import { ApiService } from '../../services/api.service';
 import { IRoutineItemModel } from '../../interfaces/routineItemModel.interface';
 
 @Component({
-    selector: 'routine-item',
-    templateUrl: 'routine-item.component.html',
-    styleUrls: ['routine-item.component.css']
+    selector: 'routine-manager',
+    templateUrl: 'routine-manager.component.html',
+    styleUrls: ['routine-manager.component.css']
 })
 
-export class RoutineItemComponent {
-    @Input() routineItem: IRoutineItemModel;
+export class RoutineManagerComponent implements OnInit {
+    routineItems: Array<IRoutineItemModel>;
 
     constructor(private apiService: ApiService) { }
 
-    updateRoutineItem(): void {
-        this.apiService.updateRoutineItem(this.routineItem._id, this.routineItem).then(() => {
-
+    ngOnInit(): void {
+        this.apiService.getRoutineItems({'_id': {'$ne': null}}).then((docs) => {
+            this.routineItems = docs;
         }).catch((error) => {
             // TODO handle error
             console.log(error);
