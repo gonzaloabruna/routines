@@ -5,7 +5,10 @@ const RoutineItemModel = mongoose.model('Routine-Item', {
     name: {type: String, required: true},
     duration: {type: Number, required: true},
     description: String,
-    tags: {type: [String]},
+    tags: [{
+        tagName: String,
+        tagColor: String
+    }],
     active: {type: Boolean, 'default': true}
 });
 

@@ -34,10 +34,11 @@ export class ApiService {
                 headers: httpHeaders
             };
 
-            delete bodyToUpdate.__v;
-            delete bodyToUpdate._id;
+            const bodyCopy = Object.assign({}, bodyToUpdate);
+            delete bodyCopy.__v;
+            delete bodyCopy._id;
 
-            this.http.put(`${this.API_URL}/api/task/${docId}`, bodyToUpdate, httpOptions).toPromise()
+            this.http.put(`${this.API_URL}/task/${docId}`, bodyCopy, httpOptions).toPromise()
                 .then((result: any) => {
                     resolve(result);
                 }).catch((error) => {
@@ -53,12 +54,29 @@ export class ApiService {
                 headers: httpHeaders
             };
 
-            delete bodyToCreate.__v;
-            delete bodyToCreate._id;
+            const bodyCopy = Object.assign({}, bodyToCreate);
+            delete bodyCopy.__v;
+            delete bodyCopy._id;
 
-            this.http.post(`${this.API_URL}/api/routine-item`, bodyToCreate, httpOptions).toPromise()
+            this.http.post(`${this.API_URL}/routine-item`, bodyCopy, httpOptions).toPromise()
                 .then((result: any) => {
                     resolve(result);
+                }).catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    deleteRoutineItem(docId: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+            const httpOptions = {
+                headers: httpHeaders
+            };
+
+            this.http.delete(`${this.API_URL}/routine-item/${docId}`, httpOptions).toPromise()
+                .then((result: any) => {
+                    resolve();
                 }).catch((error) => {
                     reject(error);
                 });
@@ -104,10 +122,11 @@ export class ApiService {
                 headers: httpHeaders
             };
 
-            delete bodyToUpdate.__v;
-            delete bodyToUpdate._id;
+            const bodyCopy = Object.assign({}, bodyToUpdate);
+            delete bodyCopy.__v;
+            delete bodyCopy._id;
 
-            this.http.put(`${this.API_URL}/api/routine-item/${docId}`, bodyToUpdate, httpOptions).toPromise()
+            this.http.put(`${this.API_URL}/routine-item/${docId}`, bodyCopy, httpOptions).toPromise()
                 .then((result: any) => {
                     resolve(result);
                 }).catch((error) => {

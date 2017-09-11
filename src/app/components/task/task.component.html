@@ -16,8 +16,8 @@
     </div>
 
     <div class="taskActions">
-        <button (click)="startTask()" class="startRoutineButton" *ngIf="!startTime">START</button>
-        <button (click)="stopTask()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
+        <button md-fab color="primary" (click)="startTask()" class="startRoutineButton" *ngIf="!startTime">START</button>
+        <button md-fab color="warn" (click)="stopTask()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
     </div>
 
     <div class="taskProgress">

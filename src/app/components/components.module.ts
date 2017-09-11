@@ -3,20 +3,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { AngularMaterialModule } from '../angular-material.module';
 import { ServicesModule } from '../services/services.module';
 
 import { RandomKeysGeneratorComponent } from './random-keys-generator/random-keys-generator.component';
 import { RoutineDisplayerComponent } from './routine-displayer/routine-displayer.component';
 import { TaskComponent } from './task/task.component';
-import { RoutineItemComponent } from './routine-item/routine-item.component';
 import { RoutineItemCreatorComponent } from './routine-item-creator/routine-item-creator.component';
 import { RoutineManagerComponent } from './routine-manager/routine-manager.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, ServicesModule ],
+  imports: [ CommonModule, FormsModule, AngularMaterialModule, ServicesModule ],
   declarations: [ RandomKeysGeneratorComponent, RoutineDisplayerComponent, TaskComponent,
-                      RoutineItemComponent, RoutineItemCreatorComponent, RoutineManagerComponent ],
+                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent ],
   exports: [ RandomKeysGeneratorComponent, RoutineDisplayerComponent, TaskComponent,
-                      RoutineItemComponent, RoutineItemCreatorComponent, RoutineManagerComponent ]
+                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent ]
 })
 export class ComponentModule { }

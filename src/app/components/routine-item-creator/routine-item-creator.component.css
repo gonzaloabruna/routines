@@ -1,1 +1,51 @@
-.routineItemCreator{}
+.routineItemCard {
+    display: inline-block;
+}
+
+.orderInput {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.topInput {
+    display: inline-flex;
+    width: 100%;
+}
+
+.nameInput {
+    width: 80%;
+    padding-left: 5%;
+}
+
+.durationInput {
+    width: 20%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.descriptionField {
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.nameField {
+    width: 100%;
+}
+
+.durationField {
+    width: 100%;
+}
+
+.addTagButton {
+    padding-left: 10px;
+}
+
+.lastPosition {
+    display: inline-grid;
+    padding: 10px;
+}
+
+.tagNameDiv {
+    width: 50%;
+}

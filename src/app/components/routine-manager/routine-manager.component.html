@@ -1,10 +1,7 @@
-<div class="routineManager">
-    -- ROUTINE ITEM MANAGER --
+<div class="routineManager" *ngIf="routineItems">
     <ng-template ngFor let-iRoutineItem [ngForOf]="routineItems" let-routineItemIndex="index">
-        <div>
-            <routine-item [routineItem]="iRoutineItem"></routine-item>
+        <div class="routineItemBox">
+            <routine-item-creator [routineItem]="iRoutineItem" (routineItemDeleted)="getAllRoutineItems()" (routineItemCreated)="getAllRoutineItems()" (routineItemUpdated)="getAllRoutineItems()"></routine-item-creator>
         </div>
     </ng-template>
-
-    <routine-item-creator></routine-item-creator>
 </div>

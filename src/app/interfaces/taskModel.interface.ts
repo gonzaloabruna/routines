@@ -1,3 +1,5 @@
+import { ITagModel } from './tagModel.interface';
+
 export interface ITaskModel {
     order: number;
     name: string;
@@ -7,7 +9,7 @@ export interface ITaskModel {
     timeSpent: number;
     percentageCompleted: number;
     description?: string;
-    tags?: Array<string>;
+    tags?: Array<ITagModel>;
     _id?: string;
     __v?: number;
 }

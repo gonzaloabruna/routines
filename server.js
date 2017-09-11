@@ -95,6 +95,15 @@ app.post('/api/routine-item', (req, res) => {
     });
 });
 
+// API: delete a routine-item
+app.delete('/api/routine-item/:id', (req, res) => {
+    RoutineItemModel.remove({_id: req.params.id}).then((routineItem) => {
+        res.json(routineItem);
+    }).catch((error) => {
+        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    });
+});
+
 // API: find active routine-items
 app.get('/api/active-routine-items', (req, res) => {
     const routineItemsQuery = {

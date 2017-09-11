@@ -1,1 +1,9 @@
-.routineManager{}
+.routineItemBox {
+    padding-bottom: 20px;
+    display: inline-block;
+}
+
+.routineManager {
+    padding-top: 40px;
+    text-align: center;
+}

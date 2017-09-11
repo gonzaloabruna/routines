@@ -5,8 +5,14 @@
   </h1>
 </div>
 
-<routine-displayer></routine-displayer>
-
-<random-keys-generator useSharpsAndFlats="true"></random-keys-generator>
-
-<routine-manager></routine-manager>
+<md-tab-group>
+    <md-tab label="Today's Tasks">
+        <routine-displayer></routine-displayer>
+    </md-tab>
+    <md-tab label="Random Keys">
+        <random-keys-generator useSharpsAndFlats="true"></random-keys-generator>
+    </md-tab>
+    <md-tab label="Configure Routine">
+        <routine-manager></routine-manager>
+    </md-tab>
+</md-tab-group>
