@@ -86,6 +86,27 @@ app.put('/api/task/:id', (req, res) => {
     });
 });
 
+// API: delete today tasks
+app.delete('/api/tasks/today', (req, res) => {
+    // Find the tasks for today (if any):
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const end = new Date();
+    end.setHours(23,59,59,999);
+    const todayTaskQuery = {
+        taskDate: {
+            $gte: start,
+            $lte: end
+        }
+    };
+
+    TaskModel.remove(todayTaskQuery).then((routineItem) => {
+        res.json(routineItem);
+    }).catch((error) => {
+        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    });
+});
+
 // API: create a routine-item
 app.post('/api/routine-item', (req, res) => {
     RoutineItemModel.create(req.body).then((routineItem) => {

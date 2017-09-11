@@ -1,7 +1,8 @@
 /**
 TO-DO LIST:
 
-1) Recreate tasks for today
+0) Hover on buttons
+0) Show summary in a nice way
 2) Generation of random keys UI
 3) Colors and improved UI
 4) Adding route of api to config files
@@ -35,10 +36,30 @@ export class RoutineDisplayerComponent implements OnInit {
     constructor(private apiService: ApiService) { }
 
     ngOnInit(): void {
+        this.getTodayTasks();
+    }
+
+    resetTodayTasks(): void {
+        if (confirm('Are you sure that you want to delete all your tasks of today?')) {
+            this.apiService.deleteTodayTasks().then(() => {
+                this.getTodayTasks();
+            }).catch((error) => {
+                // TODO handle error
+                console.log(error);
+            });
+        }
+    }
+
+    private getTodayTasks(): void {
         this.apiService.getTodayTasks().then((todayTasks: Array<ITaskModel>) => {
             this.listTasks = todayTasks;
-            this.totalMinsToStudy = this.listTasks.map((iRoutine) => { return iRoutine.duration; })
-                .reduce((accumulator: number, currentVal: number) => { return accumulator + currentVal; });
+            this.totalMinsToStudy = this.listTasks.map((iRoutine) => {
+                if (iRoutine.timeSpent && iRoutine.timeSpent > 0) {
+                    this.progressInMin += iRoutine.timeSpent;
+                }
+                return iRoutine.duration;
+            }).reduce((accumulator: number, currentVal: number) => { return accumulator + currentVal; });
+            this.recalculateTotalProgress(0);
         }).catch((error) => {
 this.listTasks = [];
 this.listTasks.push({

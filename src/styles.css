@@ -14,14 +14,34 @@ md-card-content {
     width: 600px;
 }
 
+.font-size-s {
+    font-size: 0.5em;
+}
+
 .font-size-l {
     font-size: 1.5em;
+}
+
+.padding-top-s {
+    padding-top: 0.5em;
 }
 
 .padding-top-m {
     padding-top: 1em;
 }
 
-.padding-top-s {
+.padding-top-l {
+    padding-top: 1.5em;
+}
+
+.padding-bottom-s {
     padding-top: 0.5em;
+}
+
+.padding-bottom-m {
+    padding-top: 1em;
+}
+
+.padding-bottom-l {
+    padding-top: 1.5em;
 }

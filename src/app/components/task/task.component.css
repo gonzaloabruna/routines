@@ -1,3 +1,7 @@
+:host :hover {
+    background-color: aliceblue;
+}
+
 .taskItem {
     display: inline-flex;
     width: 100%;
@@ -27,13 +31,15 @@
 .taskActions {
     width: 15%;
     text-align: center;
+    margin-right: 1em;
 }
 
 .startTaskButton {
+    z-index: 1000;
 }
 
 .stopTaskButton {
-
+    z-index: 1000;
 }
 
 .taskProgress {

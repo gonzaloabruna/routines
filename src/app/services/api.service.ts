@@ -27,6 +27,22 @@ export class ApiService {
         });
     }
 
+    deleteTodayTasks(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+            const httpOptions = {
+                headers: httpHeaders
+            };
+
+            this.http.delete(`${this.API_URL}/tasks/today`, httpOptions).toPromise()
+                .then(() => {
+                    resolve();
+                }).catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
     updateTask(docId: string, bodyToUpdate: any): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

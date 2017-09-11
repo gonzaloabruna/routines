@@ -30,8 +30,8 @@
     </div>
 
     <div class="taskActions">
-        <button md-fab color="primary" (click)="startTask()" class="startRoutineButton" *ngIf="!startTime">START</button>
-        <button md-fab color="warn" (click)="stopTask()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
+        <button md-fab color="primary" (click)="startTask()" class="startTaskButton" *ngIf="!startTime">START</button>
+        <button md-fab color="warn" (click)="stopTask()" class="stopTaskButton" *ngIf="startTime">STOP!</button>
         <div class="padding-top-s">
             To do {{task.duration}} min
         </div>

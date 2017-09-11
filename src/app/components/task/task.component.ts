@@ -32,6 +32,8 @@ export class TaskComponent implements OnInit {
     ngOnInit(): void {
         if (this.task.timeSpent && this.task.timeSpent > 0) {
             this.totalDuration = this.task.timeSpent;
+            this.roundedTotalDuration = this.task.timeSpent;
+            this.recalculatePercentage();
         }
     }
 
