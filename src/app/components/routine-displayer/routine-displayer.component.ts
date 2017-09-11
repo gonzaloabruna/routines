@@ -2,8 +2,6 @@
 TO-DO LIST:
 
 0) Hover on buttons
-4) Adding route of api to config files
-5) Mobile friendly
 6) Deploy to heroku
 7) Reporting
 

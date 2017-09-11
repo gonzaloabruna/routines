@@ -8,7 +8,7 @@ import { IRoutineItemModel } from '../interfaces/routineItemModel.interface';
 
 @Injectable()
 export class ApiService {
-    private API_URL = 'http://localhost:8080/api';
+    private API_URL = '/api';
     constructor(private http: HttpClient) { }
 
     getTodayTasks(): Promise<Array<ITaskModel>> {
