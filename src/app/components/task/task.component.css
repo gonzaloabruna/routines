@@ -1,6 +1,6 @@
 .taskItem {
     display: inline-flex;
-    width: 70%;
+    width: 100%;
 }
 
 .taskItem > div {
@@ -10,22 +10,23 @@
 
 .taskOrder {
     width: 5%;
+    text-align: center;
 }
 
 .taskName {
-    width: 20%;
+    width: 80%;
 }
 
 .taskDescription {
-    width: 35%;
+    width: 80%;
 }
 
 .taskDuration {
-    width: 5%;
 }
 
 .taskActions {
-    width: 5%;
+    width: 15%;
+    text-align: center;
 }
 
 .startTaskButton {

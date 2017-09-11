@@ -1,26 +1,42 @@
-<div class="taskItem">
-    <div class="taskOrder">
-        #{{task.order}}
+<md-card class="taskItem">
+    <div class="taskOrder font-size-l">
+        <b>#{{task.order}}</b>
     </div>
 
-    <div class="taskName">
-        {{task.name}}
-    </div>
-
-    <div class="taskDescription">
-        {{task.description}}
-    </div>
-
-    <div class="taskDuration">
-        {{task.duration}} min
+    <div class="taskName" (click)="showDescription = !showDescription">
+        <div *ngIf="showDescription === false">
+            <b>{{task.name}}</b>
+        </div>
+        <div *ngIf="showDescription === true">
+            {{task.description}}
+        </div>
+        <div class="padding-top-m">
+            <md-chip-list>
+                <ng-template ngFor let-iTag [ngForOf]="task.tags" let-tagIndex="index">
+                    <tag [tagItem]="iTag"></tag>
+                </ng-template>
+            </md-chip-list>
+        </div>
+        <div class="padding-top-m">
+            <md-progress-bar
+              color="primary"
+              mode="determinate"
+              [value]="percentageProgress"
+              bufferValue="100"></md-progress-bar>
+            <div>
+                {{percentageProgress}} %
+            </div>
+        </div>
     </div>
 
     <div class="taskActions">
         <button md-fab color="primary" (click)="startTask()" class="startRoutineButton" *ngIf="!startTime">START</button>
         <button md-fab color="warn" (click)="stopTask()" class="stopRoutineButton" *ngIf="startTime">STOP!</button>
+        <div class="padding-top-s">
+            To do {{task.duration}} min
+        </div>
+        <div class="padding-top-s">
+            Done {{roundedTotalDuration}} min
+        </div>
     </div>
-
-    <div class="taskProgress">
-        {{roundedTotalDuration}} min / {{percentageProgress}} %
-    </div>
-</div>
+</md-card>

@@ -1,8 +1,8 @@
 /**
 TO-DO LIST:
 
-1) Save tasks of today (start saving every 1 min when start is pressed, save when stop is pressed)
-2) Recreate tasks for today
+1) Recreate tasks for today
+2) Generation of random keys UI
 3) Colors and improved UI
 4) Adding route of api to config files
 5) Mobile friendly
@@ -51,7 +51,20 @@ this.listTasks.push({
     percentageCompleted: 0,
     description: 'this is a description bla bla bla bla',
     name: 'this is a task name',
-    tags: []
+    tags: [
+        {
+            tagColor: 'primary',
+            tagName: 'tag1'
+        },
+        {
+            tagColor: 'secondary',
+            tagName: 'tag2'
+        },
+        {
+            tagColor: 'none',
+            tagName: 'tag3'
+        }
+    ]
 });
             // TODO handle error
             console.log(error);

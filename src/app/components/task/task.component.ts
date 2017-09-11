@@ -2,6 +2,8 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Subscription} from 'rxjs';
 
+import { ApiService } from '../../services/api.service';
+
 import { ITaskModel } from '../../interfaces/taskModel.interface';
 
 @Component({
@@ -10,7 +12,7 @@ import { ITaskModel } from '../../interfaces/taskModel.interface';
     styleUrls: ['task.component.css']
 })
 
-export class TaskComponent {
+export class TaskComponent implements OnInit {
     private subscription: Subscription;
     private totalDuration = 0; // Total duration in minutes, high precision decimal
 
@@ -19,10 +21,19 @@ export class TaskComponent {
     endTime: Date;
     percentageProgress = 0;
     deltaDuration = 0; // In case it gets reactivated
+    showDescription = false;
 
     @Input() task: ITaskModel;
 
     @Output() progressUpdated = new EventEmitter();
+
+    constructor(private apiService: ApiService) {}
+
+    ngOnInit(): void {
+        if (this.task.timeSpent && this.task.timeSpent > 0) {
+            this.totalDuration = this.task.timeSpent;
+        }
+    }
 
     startTask(): void {
         this.startTime = new Date();
@@ -42,6 +53,7 @@ export class TaskComponent {
     private recalculateProgress(): void {
         this.recalculateDuration();
         this.recalculatePercentage();
+        this.apiService.updateTask(this.task._id, {timeSpent: this.roundedTotalDuration, percentageCompleted: this.percentageProgress});
     }
 
     private recalculateDuration(): void {
