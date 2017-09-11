@@ -1,19 +1,27 @@
-<div class="ramdomKeysContainer">
-    <div class="keysTitle">
-        Generate Random Keys to Practice scales, chords, progressions, licks...
-    </div>
+<div class="ramdomKeysContainer padding-top-s padding-bottom-m">
+    <h2 class="keysTitle">
+        Generate Random Keys to Practice
+    </h2>
 
     <div class="randomSelection">
-        <select [(ngModel)]="specialProgression" (change)="generateKeys()">
-            <option *ngFor="let iOption of randomOptions" [ngValue]="iOption">{{iOption}}</option>
-        </select>
+        <md-select placeholder="Type of progression" [(ngModel)]="specialProgression" name="ProgressionType" (change)="generateKeys()">
+            <md-option *ngFor="let iOption of randomOptions" [value]="iOption">
+              {{iOption}}
+            </md-option>
+        </md-select>
+
+        <button md-raised-button color="primary" (click)="generateKeys()" class="generateButton">GENERATE</button>
     </div>
 
-    <div class="randomKeysActions">
-        <button (click)="generateKeys()" class="generateButton">GENERATE</button>
-    </div>
-
-    <div class="keysDisplayer">
-        {{keysArray}}
+    <div class="keysDisplayer padding-top-l padding-bottom-m">
+        <md-grid-list cols="1" rowHeight="80" size="60%">
+            <ng-template ngFor let-iKey [ngForOf]="keysArray" let-keyIndex="index">
+                <md-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
+                    <span class="keyCard padding-top-s padding-bottom-s">
+                        {{iKey}}
+                    </span>
+                </md-grid-tile>
+            </ng-template>
+        </md-grid-list>
     </div>
 </div>

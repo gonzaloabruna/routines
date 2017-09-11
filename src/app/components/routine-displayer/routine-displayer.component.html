@@ -1,18 +1,20 @@
-<div class="routineDisplayer">
+<div class="routineDisplayer padding-top-m">
     <ng-template ngFor let-iTask [ngForOf]="listTasks" let-taskIndex="index">
         <div class="padding-bottom-s">
             <task [task]="iTask" (progressUpdated)="recalculateTotalProgress($event)"></task>
         </div>
     </ng-template>
-    <div class="totalProgress">
-        <div>
-            TOTAL to do: {{totalMinsToStudy}} min
-        </div>
-        <div>
-            PROGRESS DONE: {{roundedProgressInMin}} min {{progressInPercentage}} %
-        </div>
+    <div class="totalProgress padding-top-m">
+        <md-card class="totalCard">
+            <div class="totalResult padding-top-s">
+                <b>TOTAL TO DO: {{totalMinsToStudy}} min</b>
+            </div>
+            <div class="totalResult padding-bottom-s">
+                <b>PROGRESS DONE: {{roundedProgressInMin}} min {{progressInPercentage}} %</b>
+            </div>
+        </md-card>
     </div>
-    <div class="resetProgress">
+    <div class="resetProgress padding-top-s padding-bottom-s">
         <button md-raised-button (click)="resetTodayTasks()">Reset today tasks</button>
     </div>
 </div>

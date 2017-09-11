@@ -2,9 +2,6 @@
 TO-DO LIST:
 
 0) Hover on buttons
-0) Show summary in a nice way
-2) Generation of random keys UI
-3) Colors and improved UI
 4) Adding route of api to config files
 5) Mobile friendly
 6) Deploy to heroku
@@ -41,6 +38,8 @@ export class RoutineDisplayerComponent implements OnInit {
 
     resetTodayTasks(): void {
         if (confirm('Are you sure that you want to delete all your tasks of today?')) {
+            this.progressInPercentage = 0;
+            this.progressInMin = 0;
             this.apiService.deleteTodayTasks().then(() => {
                 this.getTodayTasks();
             }).catch((error) => {
@@ -61,32 +60,6 @@ export class RoutineDisplayerComponent implements OnInit {
             }).reduce((accumulator: number, currentVal: number) => { return accumulator + currentVal; });
             this.recalculateTotalProgress(0);
         }).catch((error) => {
-this.listTasks = [];
-this.listTasks.push({
-    _id: 'ABCDE',
-    order: 1,
-    duration: 15,
-    routineItem: '123',
-    taskDate: new Date(),
-    timeSpent: 0,
-    percentageCompleted: 0,
-    description: 'this is a description bla bla bla bla',
-    name: 'this is a task name',
-    tags: [
-        {
-            tagColor: 'primary',
-            tagName: 'tag1'
-        },
-        {
-            tagColor: 'secondary',
-            tagName: 'tag2'
-        },
-        {
-            tagColor: 'none',
-            tagName: 'tag3'
-        }
-    ]
-});
             // TODO handle error
             console.log(error);
         });

@@ -1,19 +1,12 @@
-.randomKeysActions {
-
-}
-
-.generateButton {
-
+.keyCard {
+    font-size: 3em;
 }
 
 .keysDisplayer {
-
-}
-
-.keysTitle {
-
+    padding-right: 0.5em;
+    padding-left: 0.5em;
 }
 
 .ramdomKeysContainer {
-
+    text-align: center;
 }

@@ -1,10 +1,17 @@
 .routineDisplayer {
     padding-left: 1em;
     padding-right: 1em;
-    padding-top: 1em;
 }
 
 .totalProgress {
     text-align: right;
-    width: 59%;
+    width: 100%;
+}
+
+.totalCard {
+    background-color: #ECECEA;
+}
+
+.totalResult {
+    margin-right: 1em;
 }
