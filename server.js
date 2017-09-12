@@ -77,6 +77,15 @@ app.get('/api/tasks/today', (req, res) => {
     });
 });
 
+// API: find tasks
+app.post('/api/task/find', (req, res) => {
+    TaskModel.find(req.body).then((tasks) => {
+        res.json(tasks);
+    }).catch((error) => {
+        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    });
+});
+
 // API: update a task
 app.put('/api/task/:id', (req, res) => {
     TaskModel.update({_id: req.params.id}, {$set: req.body}).sort('order').then((task) => {

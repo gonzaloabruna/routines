@@ -27,6 +27,22 @@ export class ApiService {
         });
     }
 
+    getTasks(findBody: any): Promise<Array<ITaskModel>> {
+        return new Promise<Array<ITaskModel>>((resolve, reject) => {
+            const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+            const httpOptions = {
+                headers: httpHeaders
+            };
+
+            this.http.post(`${this.API_URL}/task/find`, findBody, httpOptions).toPromise()
+                .then((taskDocuments: Array<ITaskModel>) => {
+                    resolve(taskDocuments);
+                }).catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
     deleteTodayTasks(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');

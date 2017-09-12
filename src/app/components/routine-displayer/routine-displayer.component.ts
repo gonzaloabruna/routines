@@ -1,9 +1,13 @@
 /**
 TO-DO LIST:
 
+1) Protect with password: https://www.npmjs.com/package/auth-static
 0) Hover on buttons
 6) Deploy to heroku
-7) Reporting
+7) Reporting:
+    http://www.chartjs.org/samples/latest/
+    http://gionkunz.github.io/chartist-js/examples.html
+    https://d3js.org/
 
 **/
 
