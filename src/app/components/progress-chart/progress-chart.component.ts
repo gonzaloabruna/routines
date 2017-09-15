@@ -1,5 +1,7 @@
 import { NgModule, Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import check from 'check-types';
+
 import { ApiService } from '../../services/api.service';
 
 import { ITaskModel } from '../../interfaces/taskModel.interface';
@@ -11,15 +13,26 @@ import { ITaskModel } from '../../interfaces/taskModel.interface';
 })
 
 export class ProgressChartComponent {
-    listTasks: Array<ITaskModel> = [];
+    allTasks: Array<ITaskModel> = [];
+    totalTasks: Array<ITaskModel> = [];
+    mapRoutineIdToIndexInArray: any = {};
 
     constructor(private apiService: ApiService) {
-        this.fetchAllTasks();
+        this.recalculate();
     }
 
-    fetchAllTasks(): void {
-        this.apiService.getTasks({_id: {'$ne': null}}).then((allTasks: Array<ITaskModel>) => {
-            this.listTasks = allTasks;
+    recalculate(): void {
+        this.apiService.getTasks({_id: {'$ne': null}}).then((allTaskResult: Array<ITaskModel>) => {
+            this.allTasks = allTaskResult;
+            allTaskResult.forEach((iTask) => {
+                if (check.assigned(this.mapRoutineIdToIndexInArray[iTask.routineItem])) {
+                    const indexOfRoutine = this.mapRoutineIdToIndexInArray[iTask.routineItem];
+                    this.totalTasks[indexOfRoutine].timeSpent += iTask.timeSpent;
+                } else {
+                    this.mapRoutineIdToIndexInArray[iTask.routineItem] = this.totalTasks.length;
+                    this.totalTasks.push(iTask);
+                }
+            });
         }).catch((error) => {
             // TODO handle error
             console.log(error);

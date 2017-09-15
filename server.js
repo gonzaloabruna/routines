@@ -174,3 +174,17 @@ const port = process.env.PORT;
 app.listen(port);
 console.log(`App listening on port ${port}`);
 
+/*
+// Add the simple security layer
+const server = require('auth-static');
+const config = {
+    options: {},
+    password: process.env.PASSWORD, // environment variable
+    port: process.env.PORT,         // port for localhost only
+    realm: 'Private',               // label for the auth form
+    root: `./dist`,                 // root directory to serve
+    username: process.env.USERNAME  // environment variable
+};
+server(config);
+console.log('Security layer added');
+*/
