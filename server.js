@@ -166,7 +166,7 @@ app.put('/api/routine-item/:id', (req, res) => {
 
 // Serve the built angular app
 app.get('*', (req, res) => {
-    res.sendfile('./dist/index.html');
+    res.sendfile(`${__dirname}/dist/index.html`);
 });
 
 // Start the server:
