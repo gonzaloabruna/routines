@@ -169,7 +169,7 @@ app.get('*', (req, res) => {
     res.sendfile('./dist/index.html');
 });
 
-// Start the server
+// Start the server:
 app.listen(process.env.PORT || 3000, (() => {
     console.log('Express server listening');
 }));
