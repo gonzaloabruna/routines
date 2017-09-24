@@ -170,9 +170,9 @@ app.get('*', (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT;
-app.listen(port);
-console.log(`App listening on port ${port}`);
+app.listen(process.env.PORT || 3000, (() => {
+    console.log('Express server listening');
+}));
 
 /*
 // Add the simple security layer
