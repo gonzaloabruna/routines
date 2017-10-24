@@ -2,23 +2,23 @@
     <mat-card-header>
     </mat-card-header>
     <mat-card-content>
-        <mat-grid-list cols="10" rowHeight="80">
-            <mat-grid-tile [colspan]="1" [rowspan]="4" [style.background]="'lightblue'">
+        <mat-grid-list cols="11" rowHeight="80">
+            <mat-grid-tile [colspan]="2" [rowspan]="4" [style.background]="'lightblue'">
                 <mat-form-field class="orderInput">
-                    <input mdInput type="number" placeholder="#" required [(ngModel)]="routineItem.order">
+                    <input matInput type="number" placeholder="#" required [(ngModel)]="routineItem.order">
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="7" [rowspan]="1" [style.background]="'lightgreen'">
                 <div class="topInput">
                     <div class="nameInput">
                         <mat-form-field class="nameField">
-                            <input mdInput placeholder="Name" required [(ngModel)]="routineItem.name">
+                            <input matInput placeholder="Name" required [(ngModel)]="routineItem.name">
                         </mat-form-field>
                     </div>
 
                     <div class="durationInput">
                         <mat-form-field class="durationField">
-                            <input mdInput type="number" placeholder="Duration" required [(ngModel)]="routineItem.duration">
+                            <input matInput type="number" placeholder="Duration" required [(ngModel)]="routineItem.duration">
                         </mat-form-field>
                     </div>
                 </div>
@@ -42,19 +42,21 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="7" [rowspan]="1" [style.background]="'lightgreen'">
                 <mat-form-field class="descriptionField">
-                    <input mdInput placeholder="Description" [(ngModel)]="routineItem.description">
+                    <input matInput placeholder="Description" [(ngModel)]="routineItem.description">
                 </mat-form-field>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="7" [rowspan]="1" [style.background]="'lightpink'">
+            <mat-grid-tile [colspan]="7" [rowspan]="2" [style.background]="'lightpink'">
                 <div>
                     <mat-form-field class="tagNameDiv">
-                        <input mdInput placeholder="Tag Name" required [(ngModel)]="tagItem.tagName" maxlength="15">
+                        <input matInput placeholder="Tag Name" required [(ngModel)]="tagItem.tagName" maxlength="15">
                     </mat-form-field>
-                    <mat-select placeholder="Tag Color" [(ngModel)]="tagItem.tagColor" name="TagColor">
-                        <mat-option *ngFor="let color of TAG_COLORS" [value]="color">
-                          {{color}}
-                        </mat-option>
-                    </mat-select>
+                    <mat-form-field>
+                        <mat-select placeholder="Tag Color" [(ngModel)]="tagItem.tagColor" name="TagColor">
+                            <mat-option *ngFor="let color of TAG_COLORS" [value]="color">
+                              {{color}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
                 <div class="addTagButton">
                     <button mat-button (click)="addTagItem()" [disabled]="!tagItem.tagName || tagItem.tagName === '' || !tagItem.tagColor">
@@ -62,7 +64,7 @@
                     </button>
                 </div>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="7" [rowspan]="1" [style.background]="'lightpink'">
+            <mat-grid-tile [colspan]="11" [rowspan]="1" [style.background]="'lightpink'">
                 <mat-chip-list>
                     <ng-template ngFor let-iTag [ngForOf]="routineItem.tags" let-tagIndex="index">
                         <tag [tagItem]="iTag"></tag>

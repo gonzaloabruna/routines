@@ -4,4 +4,64 @@
     </h2>
 
     <div id="boo" #notesContainer class="padding-left-s padding-right-s notes-container"></div>
+
+    <div id="boo2" #notesContainer2 class="padding-top-xl"></div>
+
+    <div>
+        <button mat-raised-button color="primary" (click)="recalculateNotes()" class="margin-left-s">GENERATE</button>
+
+        <mat-form-field>
+            <mat-select placeholder="Key" ariaLabel="Key" [(ngModel)]="keySignature">
+                <mat-option *ngFor="let iKey of LIST_KEY_SIGNATURES" [value]="iKey">
+                  {{iKey}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="First Note" ariaLabel="First Note" [(ngModel)]="firstNote">
+                <mat-option *ngFor="let iNote of LIST_NOTES_AVAILABLE" [value]="iNote">
+                  {{iNote}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Lowest Note" ariaLabel="Lowest Note" [(ngModel)]="minNote">
+                <mat-option *ngFor="let iNote of LIST_NOTES_AVAILABLE" [value]="iNote">
+                  {{iNote}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Highest Note" ariaLabel="Highest Note" [(ngModel)]="maxNote">
+                <mat-option *ngFor="let iNote of LIST_NOTES_AVAILABLE" [value]="iNote">
+                  {{iNote}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="canHaveSilences">Silences?</mat-checkbox>
+
+        <mat-checkbox [(ngModel)]="trendOneAscending">First Row Ascending</mat-checkbox>
+
+        <mat-checkbox [(ngModel)]="trendTwoAscending">Second Row Ascending</mat-checkbox>
+
+        <mat-form-field>
+            <mat-select placeholder="Number of Notes" ariaLabel="Number of Notes" [(ngModel)]="numberOfNotes">
+                <mat-option *ngFor="let iNote of POSSIBLE_NUMBER_OF_NOTES" [value]="iNote">
+                  {{iNote}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Practice Options" ariaLabel="Practice Options" [(ngModel)]="practiceUpToValue" (change)="calculateNextNoteCouldBe()">
+                <mat-option *ngFor="let iOption of PRACTICE_OPTIONS" [value]="iOption.value">
+                  {{iOption.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>

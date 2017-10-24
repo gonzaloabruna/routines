@@ -4,7 +4,11 @@ webpackJsonp(["main"],{
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
-	return new Promise(function(resolve, reject) { reject(new Error("Cannot find module '" + req + "'.")); });
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
 }
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
@@ -20,7 +24,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AngularMaterialModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,10 +42,10 @@ var AngularMaterialModule = (function () {
 AngularMaterialModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
         imports: [__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MdButtonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdCardModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdCheckboxModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdChipsModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdGridListModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MdInputModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MdProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MdSelectModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MdSlideToggleModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MdTabsModule */]],
-        exports: [__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MdButtonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MdCardModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MdCheckboxModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MdChipsModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MdGridListModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MdInputModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MdProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MdSelectModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MdSlideToggleModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MdTabsModule */]]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatButtonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatCardModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCheckboxModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatChipsModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatGridListModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatFormFieldModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatInputModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatSelectModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatSlideToggleModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatTabsModule */]],
+        exports: [__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatButtonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatCardModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCheckboxModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatChipsModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatGridListModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatFormFieldModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatInputModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatSelectModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatSlideToggleModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatTabsModule */]]
     })
 ], AngularMaterialModule);
 
@@ -70,7 +74,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Guitar Routine\n  </h1>\n</div>\n\n<md-tab-group>\n    <md-tab label=\"Today's Tasks\">\n        <routine-displayer class=\"padding-bottom-m\"></routine-displayer>\n    </md-tab>\n    <md-tab label=\"Random Keys\">\n        <random-keys-generator useSharpsAndFlats=\"true\" class=\"padding-bottom-m\"></random-keys-generator>\n    </md-tab>\n    <md-tab label=\"Statistics\">\n        <progress-chart></progress-chart>\n    </md-tab>\n    <md-tab label=\"Configure Routine\">\n        <routine-manager class=\"padding-bottom-m\"></routine-manager>\n    </md-tab>\n</md-tab-group>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Guitar Routine\r\n  </h1>\r\n</div>\r\n\r\n<mat-tab-group>\r\n    <mat-tab label=\"Today's Tasks\">\r\n        <routine-displayer class=\"padding-bottom-m\"></routine-displayer>\r\n    </mat-tab>\r\n    <mat-tab label=\"Random Keys\">\r\n        <random-keys-generator useSharpsAndFlats=\"true\" class=\"padding-bottom-m\"></random-keys-generator>\r\n    </mat-tab>\r\n    <mat-tab label=\"Reading Trainer\">\r\n        <reading-trainer class=\"padding-bottom-m\"></reading-trainer>\r\n    </mat-tab>\r\n    <mat-tab label=\"Statistics\">\r\n        <progress-chart></progress-chart>\r\n    </mat-tab>\r\n    <mat-tab label=\"Configure Routine\">\r\n        <routine-manager class=\"padding-bottom-m\"></routine-manager>\r\n    </mat-tab>\r\n</mat-tab-group>\r\n"
 
 /***/ }),
 
@@ -166,12 +170,14 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__routine_manager_routine_manager_component__ = __webpack_require__("../../../../../src/app/components/routine-manager/routine-manager.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__tag_tag_component__ = __webpack_require__("../../../../../src/app/components/tag/tag.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__progress_chart_progress_chart_component__ = __webpack_require__("../../../../../src/app/components/progress-chart/progress-chart.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__reading_trainer_reading_trainer_component__ = __webpack_require__("../../../../../src/app/components/reading-trainer/reading-trainer.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -193,9 +199,9 @@ ComponentModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */], __WEBPACK_IMPORTED_MODULE_3__angular_material_module__["a" /* AngularMaterialModule */], __WEBPACK_IMPORTED_MODULE_4__services_services_module__["a" /* ServicesModule */]],
         declarations: [__WEBPACK_IMPORTED_MODULE_11__progress_chart_progress_chart_component__["a" /* ProgressChartComponent */], __WEBPACK_IMPORTED_MODULE_5__random_keys_generator_random_keys_generator_component__["a" /* RandomKeysGeneratorComponent */], __WEBPACK_IMPORTED_MODULE_6__routine_displayer_routine_displayer_component__["a" /* RoutineDisplayerComponent */], __WEBPACK_IMPORTED_MODULE_7__task_task_component__["a" /* TaskComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__routine_item_creator_routine_item_creator_component__["a" /* RoutineItemCreatorComponent */], __WEBPACK_IMPORTED_MODULE_9__routine_manager_routine_manager_component__["a" /* RoutineManagerComponent */], __WEBPACK_IMPORTED_MODULE_10__tag_tag_component__["a" /* TagComponent */]],
+            __WEBPACK_IMPORTED_MODULE_8__routine_item_creator_routine_item_creator_component__["a" /* RoutineItemCreatorComponent */], __WEBPACK_IMPORTED_MODULE_9__routine_manager_routine_manager_component__["a" /* RoutineManagerComponent */], __WEBPACK_IMPORTED_MODULE_10__tag_tag_component__["a" /* TagComponent */], __WEBPACK_IMPORTED_MODULE_12__reading_trainer_reading_trainer_component__["a" /* ReadingTrainerComponent */]],
         exports: [__WEBPACK_IMPORTED_MODULE_11__progress_chart_progress_chart_component__["a" /* ProgressChartComponent */], __WEBPACK_IMPORTED_MODULE_5__random_keys_generator_random_keys_generator_component__["a" /* RandomKeysGeneratorComponent */], __WEBPACK_IMPORTED_MODULE_6__routine_displayer_routine_displayer_component__["a" /* RoutineDisplayerComponent */], __WEBPACK_IMPORTED_MODULE_7__task_task_component__["a" /* TaskComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__routine_item_creator_routine_item_creator_component__["a" /* RoutineItemCreatorComponent */], __WEBPACK_IMPORTED_MODULE_9__routine_manager_routine_manager_component__["a" /* RoutineManagerComponent */], __WEBPACK_IMPORTED_MODULE_10__tag_tag_component__["a" /* TagComponent */]]
+            __WEBPACK_IMPORTED_MODULE_8__routine_item_creator_routine_item_creator_component__["a" /* RoutineItemCreatorComponent */], __WEBPACK_IMPORTED_MODULE_9__routine_manager_routine_manager_component__["a" /* RoutineManagerComponent */], __WEBPACK_IMPORTED_MODULE_10__tag_tag_component__["a" /* TagComponent */], __WEBPACK_IMPORTED_MODULE_12__reading_trainer_reading_trainer_component__["a" /* ReadingTrainerComponent */]]
     })
 ], ComponentModule);
 
@@ -224,7 +230,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/progress-chart/progress-chart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mainContainer padding-top-m\">\r\n    <table>\r\n        <tr>\r\n            <th md-sort-header=\"name\">Task Name</th>\r\n            <th md-sort-header=\"timeSpent\">Time spent (min)</th>\r\n        </tr>\r\n        <tr *ngFor=\"let iTask of totalTasks\">\r\n            <td>{{iTask.name}}</td>\r\n            <td>{{iTask.timeSpent}}</td>\r\n        </tr>\r\n    </table>\r\n</div>"
+module.exports = "<div class=\"mainContainer padding-top-m\">\r\n    <table>\r\n        <tr>\r\n            <th mat-sort-header=\"name\">Task Name</th>\r\n            <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n        </tr>\r\n        <tr *ngFor=\"let iTask of totalTasks\">\r\n            <td>{{iTask.name}}</td>\r\n            <td>{{iTask.timeSpent}}</td>\r\n        </tr>\r\n    </table>\r\n</div>"
 
 /***/ }),
 
@@ -300,7 +306,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".keyCard {\r\n    font-size: 3em;\r\n}\r\n\r\n.keysDisplayer {\r\n    padding-right: 0.5em;\r\n    padding-left: 0.5em;\r\n}\r\n\r\n.ramdomKeysContainer {\r\n    text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, ".keyCard {\r\n    font-size: 3em;\r\n}\r\n\r\n.keysDisplayer {\r\n    padding-right: 0.5em;\r\n    padding-left: 0.5em;\r\n}\r\n\r\n.ramdomKeysContainer {\r\n    text-align: center;\r\n}\r\n\r\n.randomSelection {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n}\r\n\r\n.selectOption {\r\n    width: 50%;\r\n}", ""]);
 
 // exports
 
@@ -313,7 +319,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/random-keys-generator/random-keys-generator.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ramdomKeysContainer padding-top-s padding-bottom-m\">\r\n    <h2 class=\"keysTitle\">\r\n        Generate Random Keys to Practice\r\n    </h2>\r\n\r\n    <div class=\"randomSelection\">\r\n        <md-select placeholder=\"Type of progression\" [(ngModel)]=\"specialProgression\" name=\"ProgressionType\" (change)=\"generateKeys()\">\r\n            <md-option *ngFor=\"let iOption of randomOptions\" [value]=\"iOption\">\r\n              {{iOption}}\r\n            </md-option>\r\n        </md-select>\r\n\r\n        <button md-raised-button color=\"primary\" (click)=\"generateKeys()\" class=\"generateButton\">GENERATE</button>\r\n    </div>\r\n\r\n    <div class=\"keysDisplayer padding-top-l padding-bottom-m\">\r\n        <md-grid-list cols=\"1\" rowHeight=\"80\" size=\"60%\">\r\n            <ng-template ngFor let-iKey [ngForOf]=\"keysArray\" let-keyIndex=\"index\">\r\n                <md-grid-tile [colspan]=\"1\" [rowspan]=\"1\" [style.background]=\"'lightblue'\">\r\n                    <span class=\"keyCard padding-top-s padding-bottom-s\">\r\n                        {{iKey}}\r\n                    </span>\r\n                </md-grid-tile>\r\n            </ng-template>\r\n        </md-grid-list>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"ramdomKeysContainer padding-top-s padding-bottom-m\">\r\n    <h2 class=\"keysTitle\">\r\n        Generate Random Keys to Practice\r\n    </h2>\r\n\r\n    <div class=\"randomSelection\">\r\n            <mat-select placeholder=\"Type of progression\" [(ngModel)]=\"specialProgression\" name=\"ProgressionType\" (change)=\"generateKeys()\" class=\"selectOption\">\r\n                <mat-option *ngFor=\"let iOption of randomOptions\" [value]=\"iOption\">\r\n                  {{iOption}}\r\n                </mat-option>\r\n            </mat-select>\r\n            <button mat-raised-button color=\"primary\" (click)=\"generateKeys()\" class=\"generateButton margin-left-s\">GENERATE</button>\r\n    </div>\r\n\r\n    <div class=\"keysDisplayer padding-top-l padding-bottom-m\">\r\n        <mat-grid-list cols=\"1\" rowHeight=\"80\" size=\"60%\">\r\n            <ng-template ngFor let-iKey [ngForOf]=\"keysArray\" let-keyIndex=\"index\">\r\n                <mat-grid-tile [colspan]=\"1\" [rowspan]=\"1\" [style.background]=\"'lightblue'\">\r\n                    <span class=\"keyCard padding-top-s padding-bottom-s\">\r\n                        {{iKey}}\r\n                    </span>\r\n                </mat-grid-tile>\r\n            </ng-template>\r\n        </mat-grid-list>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -500,6 +506,293 @@ RandomKeysGeneratorComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/reading-trainer/reading-trainer.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/reading-trainer/reading-trainer.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div>\r\n    <h2>\r\n        Music Notation Trainer\r\n    </h2>\r\n\r\n    <div id=\"boo\" #notesContainer class=\"padding-left-s padding-right-s notes-container\"></div>\r\n\r\n    <div id=\"boo2\" #notesContainer2 class=\"padding-top-xl\"></div>\r\n\r\n    <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculateNotes()\" class=\"margin-left-s\">GENERATE</button>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"Key\" ariaLabel=\"Key\" [(ngModel)]=\"keySignature\">\r\n                <mat-option *ngFor=\"let iKey of LIST_KEY_SIGNATURES\" [value]=\"iKey\">\r\n                  {{iKey}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"First Note\" ariaLabel=\"First Note\" [(ngModel)]=\"firstNote\">\r\n                <mat-option *ngFor=\"let iNote of LIST_NOTES_AVAILABLE\" [value]=\"iNote\">\r\n                  {{iNote}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"Lowest Note\" ariaLabel=\"Lowest Note\" [(ngModel)]=\"minNote\">\r\n                <mat-option *ngFor=\"let iNote of LIST_NOTES_AVAILABLE\" [value]=\"iNote\">\r\n                  {{iNote}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"Highest Note\" ariaLabel=\"Highest Note\" [(ngModel)]=\"maxNote\">\r\n                <mat-option *ngFor=\"let iNote of LIST_NOTES_AVAILABLE\" [value]=\"iNote\">\r\n                  {{iNote}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n\r\n        <mat-checkbox [(ngModel)]=\"canHaveSilences\">Silences?</mat-checkbox>\r\n\r\n        <mat-checkbox [(ngModel)]=\"trendOneAscending\">First Row Ascending</mat-checkbox>\r\n\r\n        <mat-checkbox [(ngModel)]=\"trendTwoAscending\">Second Row Ascending</mat-checkbox>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"Number of Notes\" ariaLabel=\"Number of Notes\" [(ngModel)]=\"numberOfNotes\">\r\n                <mat-option *ngFor=\"let iNote of POSSIBLE_NUMBER_OF_NOTES\" [value]=\"iNote\">\r\n                  {{iNote}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field>\r\n            <mat-select placeholder=\"Practice Options\" ariaLabel=\"Practice Options\" [(ngModel)]=\"practiceUpToValue\" (change)=\"calculateNextNoteCouldBe()\">\r\n                <mat-option *ngFor=\"let iOption of PRACTICE_OPTIONS\" [value]=\"iOption.value\">\r\n                  {{iOption.label}}\r\n                </mat-option>\r\n            </mat-select>\r\n        </mat-form-field>\r\n    </div>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/reading-trainer/reading-trainer.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReadingTrainerComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vexflow__ = __webpack_require__("../../../../vexflow/releases/vexflow-debug.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vexflow__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// Añadir las opciones:
+// Poder seleccionar la duración de la nota
+
+var ReadingTrainerComponent = (function () {
+    function ReadingTrainerComponent(rd) {
+        this.rd = rd;
+        this.LIST_KEY_SIGNATURES = ['A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'G', 'G#', 'Ab'];
+        this.LIST_NOTES_AVAILABLE = [
+            'e/3', 'f/3', 'g/3', 'a/3', 'b/3',
+            'c/4', 'd/4', 'e/4', 'f/4', 'g/4', 'a/4', 'b/4',
+            'c/5', 'd/5', 'e/5', 'f/5', 'g/5', 'a/5', 'b/5',
+            'c/6', 'd/6', 'e/6', 'f/6', 'g/6'
+        ];
+        this.POSSIBLE_NUMBER_OF_NOTES = [16, 24, 32, 40, 48];
+        this.minNote = 'a/3';
+        this.maxNote = 'c/6';
+        this.firstNote = 'c/4';
+        this.trendOneAscending = true;
+        this.trendTwoAscending = false;
+        this.keySignature = 'C';
+        this.numberOfNotes = 48;
+        this.canHaveSilences = true;
+        this.nextNoteCouldBe = [
+            0,
+            1 /*, // Major 2nd
+            2, // Major 3rd
+/*
+            3, // Perfect 4th
+            4, // Perfect 5th
+            5, // Major 6th
+            6, // Major 7th
+            7  // Octave
+*/
+        ];
+        this.practiceUpToValue = 1;
+        this.PRACTICE_OPTIONS = [
+            { label: 'Major 2nd', value: 1 },
+            { label: 'Major 3rd', value: 2 },
+            { label: 'Perfect 4th', value: 3 },
+            { label: 'Perfect 5th', value: 4 },
+            { label: 'Major 6th', value: 5 },
+            { label: 'Major 7th', value: 6 },
+            { label: 'Octave', value: 7 }
+        ];
+        this.noteDurationCouldBe = [
+            'h',
+            'q',
+            '8' // corchea
+        ];
+        this.noteSilenceCouldBe = [
+            'hr',
+            'qr',
+            '8r' // silencio de corchea
+        ];
+    }
+    ReadingTrainerComponent.prototype.ngAfterViewInit = function () {
+        this.recalculateNotes();
+    };
+    ReadingTrainerComponent.prototype.recalculateNotes = function () {
+        this.drawLine1();
+        this.drawLine2();
+    };
+    ReadingTrainerComponent.prototype.calculateNextNoteCouldBe = function () {
+        this.nextNoteCouldBe = [];
+        for (var i = 0; i <= this.practiceUpToValue; i++) {
+            this.nextNoteCouldBe.push(i);
+        }
+    };
+    ReadingTrainerComponent.prototype.calculateNoteDuration = function () {
+        var randomNumber = Math.floor((Math.random() * 100));
+        if (this.canHaveSilences === true && randomNumber < 10) {
+            return 'qr';
+        }
+        return 'q';
+    };
+    ReadingTrainerComponent.prototype.drawLine1 = function () {
+        this.generateRandomNotes(this.firstNote, this.trendOneAscending);
+        var div = this.el.nativeElement;
+        div.innerHTML = '';
+        var VF = __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"];
+        var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+        var width = window.screen.width - 80;
+        // at least 25px per note:
+        if (width < 25 * this.numberOfNotes) {
+            width = 25 * this.numberOfNotes;
+        }
+        // Size our svg:
+        renderer.resize(width, 200);
+        // And get a drawing context:
+        var context = renderer.getContext();
+        // Create a stave at position 10, 40 of width 400 on the canvas.
+        var stave = new VF.Stave(10, 40, width - 10).addKeySignature(this.keySignature);
+        // Add a clef and time signature.
+        stave.addClef('treble').addTimeSignature('4/4');
+        // Connect it to the rendering context and draw!
+        stave.setContext(context).draw();
+        var notes = [];
+        var numberRealNotes = 0;
+        this.arrayOfNotes.forEach(function (iNote) {
+            if (numberRealNotes > 0 && numberRealNotes % 4 === 0) {
+                notes.push(new __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"].BarNote());
+            }
+            notes.push(new VF.StaveNote({ keys: iNote.keys, duration: iNote.duration }));
+            numberRealNotes++;
+        });
+        var beams = VF.Beam.generateBeams(notes);
+        __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"].Formatter.FormatAndDraw(context, stave, notes);
+        beams.forEach(function (b) { b.setContext(context).draw(); });
+    };
+    ReadingTrainerComponent.prototype.drawLine2 = function () {
+        var firstNote = this.arrayOfNotes[this.arrayOfNotes.length - 1]['keys'][0];
+        this.generateRandomNotes(firstNote, this.trendTwoAscending);
+        var div = this.el2.nativeElement;
+        div.innerHTML = '';
+        var VF = __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"];
+        var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+        var width = window.screen.width - 80;
+        // at least 25px per note:
+        if (width < 25 * this.numberOfNotes) {
+            width = 25 * this.numberOfNotes;
+        }
+        // Size our svg:
+        renderer.resize(width, 200);
+        // And get a drawing context:
+        var context = renderer.getContext();
+        // Create a stave at position 10, 40 of width 400 on the canvas.
+        var stave = new VF.Stave(10, 40, width - 10).addKeySignature(this.keySignature);
+        // Add a clef and time signature.
+        stave.addClef('treble').addTimeSignature('4/4');
+        // Connect it to the rendering context and draw!
+        stave.setContext(context).draw();
+        var notes = [];
+        var numberRealNotes = 0;
+        this.arrayOfNotes.forEach(function (iNote) {
+            if (numberRealNotes > 0 && numberRealNotes % 4 === 0) {
+                notes.push(new __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"].BarNote());
+            }
+            notes.push(new VF.StaveNote({ keys: iNote.keys, duration: iNote.duration }));
+            numberRealNotes++;
+        });
+        var beams = VF.Beam.generateBeams(notes);
+        __WEBPACK_IMPORTED_MODULE_1_vexflow__["Flow"].Formatter.FormatAndDraw(context, stave, notes);
+        beams.forEach(function (b) { b.setContext(context).draw(); });
+    };
+    ReadingTrainerComponent.prototype.generateRandomNotes = function (firstNote, ascending) {
+        this.recalculateIndexesForNotes();
+        this.arrayOfNotes = [];
+        this.arrayOfNotes.push({ keys: [firstNote], duration: 'q' });
+        var index = 0;
+        // Find the note position in the LIST_NOTES_AVAILABLE
+        while (this.LIST_NOTES_AVAILABLE[index] !== firstNote) {
+            index++;
+        }
+        while (this.arrayOfNotes.length < this.numberOfNotes) {
+            var duration = this.calculateNoteDuration();
+            if (duration.endsWith('r')) {
+                this.arrayOfNotes.push({ keys: ['b/4'], duration: duration });
+            }
+            else {
+                // See how many numbers we have to add
+                var numberToAddIndex = Math.floor((Math.random() * this.nextNoteCouldBe.length));
+                var numberToAddValue = this.nextNoteCouldBe[numberToAddIndex];
+                // To decrease the percentage of repetition of notes, if it takes the same note, recalculate it again
+                if (numberToAddValue === 0) {
+                    var randomNumber = Math.floor((Math.random() * 100));
+                    if (randomNumber > 10) {
+                        while (numberToAddValue === 0) {
+                            numberToAddIndex = Math.floor((Math.random() * this.nextNoteCouldBe.length));
+                            numberToAddValue = this.nextNoteCouldBe[numberToAddIndex];
+                        }
+                    }
+                }
+                // If it is impossible to add it, decrease it
+                if ((index + numberToAddValue) >= this.LIST_NOTES_AVAILABLE.length) {
+                    index = index - numberToAddValue;
+                }
+                else if ((index - numberToAddValue) < 0) {
+                    index = index + numberToAddValue;
+                }
+                else {
+                    var randomNumber = Math.floor((Math.random() * 100));
+                    // random value. to force a trend, if bigger than 33, use the ascending or descending, if lower, move to back
+                    if (randomNumber >= 33) {
+                        if (ascending === true) {
+                            index = index + numberToAddValue;
+                        }
+                        else {
+                            index = index - numberToAddValue;
+                        }
+                    }
+                    else {
+                        if (ascending === true) {
+                            index = index - numberToAddValue;
+                        }
+                        else {
+                            index = index + numberToAddValue;
+                        }
+                    }
+                }
+                if (index < this.minIndexForNote) {
+                    index = this.minIndexForNote;
+                }
+                else if (index > this.maxIndexForNote) {
+                    index = this.maxIndexForNote;
+                }
+                var newNote = this.LIST_NOTES_AVAILABLE[index];
+                this.arrayOfNotes.push({ keys: [newNote], duration: duration });
+            }
+        }
+    };
+    ReadingTrainerComponent.prototype.recalculateIndexesForNotes = function () {
+        this.minIndexForNote = 0;
+        while (this.LIST_NOTES_AVAILABLE[this.minIndexForNote] !== this.minNote) {
+            this.minIndexForNote++;
+        }
+        this.maxIndexForNote = 0;
+        while (this.LIST_NOTES_AVAILABLE[this.maxIndexForNote] !== this.maxNote) {
+            this.maxIndexForNote++;
+        }
+    };
+    return ReadingTrainerComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('notesContainer'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
+], ReadingTrainerComponent.prototype, "el", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('notesContainer2'),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _b || Object)
+], ReadingTrainerComponent.prototype, "el2", void 0);
+ReadingTrainerComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'reading-trainer',
+        template: __webpack_require__("../../../../../src/app/components/reading-trainer/reading-trainer.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/reading-trainer/reading-trainer.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Renderer2 */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Renderer2 */]) === "function" && _c || Object])
+], ReadingTrainerComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=reading-trainer.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/routine-displayer/routine-displayer.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -521,7 +814,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/routine-displayer/routine-displayer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"routineDisplayer padding-top-m\">\r\n    <ng-template ngFor let-iTask [ngForOf]=\"listTasks\" let-taskIndex=\"index\">\r\n        <div class=\"padding-bottom-s\">\r\n            <task [task]=\"iTask\" (progressUpdated)=\"recalculateTotalProgress($event)\"></task>\r\n        </div>\r\n    </ng-template>\r\n    <div class=\"totalProgress padding-top-m\">\r\n        <md-card class=\"totalCard\">\r\n            <div class=\"totalResult padding-top-s\">\r\n                <b>TOTAL TO DO: {{totalMinsToStudy}} min</b>\r\n            </div>\r\n            <div class=\"totalResult padding-bottom-s\">\r\n                <b>PROGRESS DONE: {{roundedProgressInMin}} min {{progressInPercentage}} %</b>\r\n            </div>\r\n        </md-card>\r\n    </div>\r\n    <div class=\"resetProgress padding-top-s padding-bottom-s\">\r\n        <button md-raised-button (click)=\"resetTodayTasks()\">Reset today tasks</button>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"routineDisplayer padding-top-m\">\r\n    <ng-template ngFor let-iTask [ngForOf]=\"listTasks\" let-taskIndex=\"index\">\r\n        <div class=\"padding-bottom-s\">\r\n            <task [task]=\"iTask\" (progressUpdated)=\"recalculateTotalProgress($event)\"></task>\r\n        </div>\r\n    </ng-template>\r\n    <div class=\"totalProgress padding-top-m\">\r\n        <mat-card class=\"totalCard\">\r\n            <div class=\"totalResult padding-top-s\">\r\n                <b>TOTAL TO DO: {{totalMinsToStudy}} min</b>\r\n            </div>\r\n            <div class=\"totalResult padding-bottom-s\">\r\n                <b>PROGRESS DONE: {{roundedProgressInMin}} min {{progressInPercentage}} %</b>\r\n            </div>\r\n        </mat-card>\r\n    </div>\r\n    <div class=\"resetProgress padding-top-s padding-bottom-s\">\r\n        <button mat-raised-button (click)=\"resetTodayTasks()\">Reset today tasks</button>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -584,6 +877,9 @@ var RoutineDisplayerComponent = (function () {
         var _this = this;
         this.apiService.getTodayTasks().then(function (todayTasks) {
             _this.listTasks = todayTasks;
+            if (_this.listTasks.length === 0) {
+                return;
+            }
             _this.totalMinsToStudy = _this.listTasks.map(function (iRoutine) {
                 if (iRoutine.timeSpent && iRoutine.timeSpent > 0) {
                     _this.progressInMin += iRoutine.timeSpent;
@@ -628,7 +924,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".routineItemCard {\r\n    display: inline-block;\r\n}\r\n\r\n.orderInput {\r\n    margin-left: 25%;\r\n    margin-right: 25%;\r\n}\r\n\r\n.topInput {\r\n    display: -webkit-inline-box;\r\n    display: -ms-inline-flexbox;\r\n    display: inline-flex;\r\n    width: 100%;\r\n}\r\n\r\n.nameInput {\r\n    width: 80%;\r\n    padding-left: 5%;\r\n}\r\n\r\n.durationInput {\r\n    width: 20%;\r\n    padding-left: 5%;\r\n    padding-right: 5%;\r\n}\r\n\r\n.descriptionField {\r\n    width: 100%;\r\n    padding-left: 5%;\r\n    padding-right: 5%;\r\n}\r\n\r\n.nameField {\r\n    width: 100%;\r\n}\r\n\r\n.durationField {\r\n    width: 100%;\r\n}\r\n\r\n.addTagButton {\r\n    padding-left: 10px;\r\n}\r\n\r\n.lastPosition {\r\n    display: -ms-inline-grid;\r\n    display: inline-grid;\r\n    padding: 10px;\r\n}\r\n\r\n.tagNameDiv {\r\n    width: 50%;\r\n}", ""]);
+exports.push([module.i, ".routineItemCard {\r\n    display: inline-block;\r\n}\r\n\r\n.orderInput {\r\n    width: 50px;\r\n}\r\n\r\n.topInput {\r\n    display: -webkit-inline-box;\r\n    display: -ms-inline-flexbox;\r\n    display: inline-flex;\r\n    width: 100%;\r\n}\r\n\r\n.nameInput {\r\n    width: 80%;\r\n    padding-left: 5%;\r\n}\r\n\r\n.durationInput {\r\n    width: 20%;\r\n    padding-left: 5%;\r\n    padding-right: 5%;\r\n}\r\n\r\n.descriptionField {\r\n    width: 100%;\r\n    padding-left: 5%;\r\n    padding-right: 5%;\r\n}\r\n\r\n.nameField {\r\n    width: 100%;\r\n}\r\n\r\n.durationField {\r\n    width: 100%;\r\n}\r\n\r\n.addTagButton {\r\n    padding-left: 10px;\r\n}\r\n\r\n.lastPosition {\r\n    display: -ms-inline-grid;\r\n    display: inline-grid;\r\n    padding: 10px;\r\n}\r\n\r\n.tagNameDiv {\r\n    width: 50%;\r\n}", ""]);
 
 // exports
 
@@ -641,7 +937,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/routine-item-creator/routine-item-creator.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"rotineItemCard\">\r\n    <md-card-header>\r\n    </md-card-header>\r\n    <md-card-content>\r\n        <md-grid-list cols=\"10\" rowHeight=\"80\">\r\n            <md-grid-tile [colspan]=\"1\" [rowspan]=\"4\" [style.background]=\"'lightblue'\">\r\n                <md-form-field class=\"orderInput\">\r\n                    <input mdInput type=\"number\" placeholder=\"#\" required [(ngModel)]=\"routineItem.order\">\r\n                </md-form-field>\r\n            </md-grid-tile>\r\n            <md-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightgreen'\">\r\n                <div class=\"topInput\">\r\n                    <div class=\"nameInput\">\r\n                        <md-form-field class=\"nameField\">\r\n                            <input mdInput placeholder=\"Name\" required [(ngModel)]=\"routineItem.name\">\r\n                        </md-form-field>\r\n                    </div>\r\n\r\n                    <div class=\"durationInput\">\r\n                        <md-form-field class=\"durationField\">\r\n                            <input mdInput type=\"number\" placeholder=\"Duration\" required [(ngModel)]=\"routineItem.duration\">\r\n                        </md-form-field>\r\n                    </div>\r\n                </div>\r\n            </md-grid-tile>\r\n            <md-grid-tile [colspan]=\"2\" [rowspan]=\"4\" [style.background]=\"'lightblue'\">\r\n                <div class=\"centerDiv\">\r\n                    <div class=\"lastPosition\">\r\n                        <md-checkbox [(ngModel)]=\"routineItem.active\">Active?</md-checkbox>\r\n                    </div>\r\n                    <div class=\"lastPosition\">\r\n                        <button md-raised-button color=\"primary\" [disabled]=\"!routineItem.name || routineItem.name === '' || !routineItem.duration || routineItem.duration === 0 || !routineItem.order || routineItem.order === 0\" (click)=\"saveRoutineItem()\">\r\n                            Save\r\n                        </button>\r\n                    </div>\r\n                    <div class=\"lastPosition\" *ngIf=\"isNew === false\">\r\n                        <button md-raised-button color=\"warn\" (click)=\"deleteRoutineItem()\">\r\n                            Delete\r\n                        </button>\r\n                    </div>\r\n                </div>\r\n            </md-grid-tile>\r\n            <md-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightgreen'\">\r\n                <md-form-field class=\"descriptionField\">\r\n                    <input mdInput placeholder=\"Description\" [(ngModel)]=\"routineItem.description\">\r\n                </md-form-field>\r\n            </md-grid-tile>\r\n            <md-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightpink'\">\r\n                <div>\r\n                    <md-form-field class=\"tagNameDiv\">\r\n                        <input mdInput placeholder=\"Tag Name\" required [(ngModel)]=\"tagItem.tagName\" maxlength=\"15\">\r\n                    </md-form-field>\r\n                    <md-select placeholder=\"Tag Color\" [(ngModel)]=\"tagItem.tagColor\" name=\"TagColor\">\r\n                        <md-option *ngFor=\"let color of TAG_COLORS\" [value]=\"color\">\r\n                          {{color}}\r\n                        </md-option>\r\n                    </md-select>\r\n                </div>\r\n                <div class=\"addTagButton\">\r\n                    <button md-button (click)=\"addTagItem()\" [disabled]=\"!tagItem.tagName || tagItem.tagName === '' || !tagItem.tagColor\">\r\n                        Add Tag\r\n                    </button>\r\n                </div>\r\n            </md-grid-tile>\r\n            <md-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightpink'\">\r\n                <md-chip-list>\r\n                    <ng-template ngFor let-iTag [ngForOf]=\"routineItem.tags\" let-tagIndex=\"index\">\r\n                        <tag [tagItem]=\"iTag\"></tag>\r\n                    </ng-template>\r\n                </md-chip-list>\r\n            </md-grid-tile>\r\n        </md-grid-list>\r\n    </md-card-content>\r\n</md-card>\r\n"
+module.exports = "<mat-card class=\"rotineItemCard\">\r\n    <mat-card-header>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <mat-grid-list cols=\"11\" rowHeight=\"80\">\r\n            <mat-grid-tile [colspan]=\"2\" [rowspan]=\"4\" [style.background]=\"'lightblue'\">\r\n                <mat-form-field class=\"orderInput\">\r\n                    <input matInput type=\"number\" placeholder=\"#\" required [(ngModel)]=\"routineItem.order\">\r\n                </mat-form-field>\r\n            </mat-grid-tile>\r\n            <mat-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightgreen'\">\r\n                <div class=\"topInput\">\r\n                    <div class=\"nameInput\">\r\n                        <mat-form-field class=\"nameField\">\r\n                            <input matInput placeholder=\"Name\" required [(ngModel)]=\"routineItem.name\">\r\n                        </mat-form-field>\r\n                    </div>\r\n\r\n                    <div class=\"durationInput\">\r\n                        <mat-form-field class=\"durationField\">\r\n                            <input matInput type=\"number\" placeholder=\"Duration\" required [(ngModel)]=\"routineItem.duration\">\r\n                        </mat-form-field>\r\n                    </div>\r\n                </div>\r\n            </mat-grid-tile>\r\n            <mat-grid-tile [colspan]=\"2\" [rowspan]=\"4\" [style.background]=\"'lightblue'\">\r\n                <div class=\"centerDiv\">\r\n                    <div class=\"lastPosition\">\r\n                        <mat-checkbox [(ngModel)]=\"routineItem.active\">Active?</mat-checkbox>\r\n                    </div>\r\n                    <div class=\"lastPosition\">\r\n                        <button mat-raised-button color=\"primary\" [disabled]=\"!routineItem.name || routineItem.name === '' || !routineItem.duration || routineItem.duration === 0 || !routineItem.order || routineItem.order === 0\" (click)=\"saveRoutineItem()\">\r\n                            Save\r\n                        </button>\r\n                    </div>\r\n                    <div class=\"lastPosition\" *ngIf=\"isNew === false\">\r\n                        <button mat-raised-button color=\"warn\" (click)=\"deleteRoutineItem()\">\r\n                            Delete\r\n                        </button>\r\n                    </div>\r\n                </div>\r\n            </mat-grid-tile>\r\n            <mat-grid-tile [colspan]=\"7\" [rowspan]=\"1\" [style.background]=\"'lightgreen'\">\r\n                <mat-form-field class=\"descriptionField\">\r\n                    <input matInput placeholder=\"Description\" [(ngModel)]=\"routineItem.description\">\r\n                </mat-form-field>\r\n            </mat-grid-tile>\r\n            <mat-grid-tile [colspan]=\"7\" [rowspan]=\"2\" [style.background]=\"'lightpink'\">\r\n                <div>\r\n                    <mat-form-field class=\"tagNameDiv\">\r\n                        <input matInput placeholder=\"Tag Name\" required [(ngModel)]=\"tagItem.tagName\" maxlength=\"15\">\r\n                    </mat-form-field>\r\n                    <mat-form-field>\r\n                        <mat-select placeholder=\"Tag Color\" [(ngModel)]=\"tagItem.tagColor\" name=\"TagColor\">\r\n                            <mat-option *ngFor=\"let color of TAG_COLORS\" [value]=\"color\">\r\n                              {{color}}\r\n                            </mat-option>\r\n                        </mat-select>\r\n                    </mat-form-field>\r\n                </div>\r\n                <div class=\"addTagButton\">\r\n                    <button mat-button (click)=\"addTagItem()\" [disabled]=\"!tagItem.tagName || tagItem.tagName === '' || !tagItem.tagColor\">\r\n                        Add Tag\r\n                    </button>\r\n                </div>\r\n            </mat-grid-tile>\r\n            <mat-grid-tile [colspan]=\"11\" [rowspan]=\"1\" [style.background]=\"'lightpink'\">\r\n                <mat-chip-list>\r\n                    <ng-template ngFor let-iTag [ngForOf]=\"routineItem.tags\" let-tagIndex=\"index\">\r\n                        <tag [tagItem]=\"iTag\"></tag>\r\n                    </ng-template>\r\n                </mat-chip-list>\r\n            </mat-grid-tile>\r\n        </mat-grid-list>\r\n    </mat-card-content>\r\n</mat-card>\r\n"
 
 /***/ }),
 
@@ -901,7 +1197,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/tag/tag.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"tag\">\r\n    <md-chip [color]=\"tagItem.tagColor\" selected=\"true\">\r\n        {{tagItem.tagName}}\r\n    </md-chip>\r\n</div>"
+module.exports = "<div class=\"tag\">\r\n    <mat-chip [color]=\"tagItem.tagColor\" selected=\"true\">\r\n        {{tagItem.tagName}}\r\n    </mat-chip>\r\n</div>"
 
 /***/ }),
 
@@ -977,7 +1273,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/task/task.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"taskItem\">\r\n    <div class=\"taskOrder font-size-l\">\r\n        <b>#{{task.order}}</b>\r\n    </div>\r\n\r\n    <div class=\"taskName\" (click)=\"showDescription = !showDescription\">\r\n        <div *ngIf=\"showDescription === false\">\r\n            <b>{{task.name}}</b>\r\n        </div>\r\n        <div *ngIf=\"showDescription === true\">\r\n            {{task.description}}\r\n        </div>\r\n        <div class=\"padding-top-m\">\r\n            <md-chip-list>\r\n                <ng-template ngFor let-iTag [ngForOf]=\"task.tags\" let-tagIndex=\"index\">\r\n                    <tag [tagItem]=\"iTag\"></tag>\r\n                </ng-template>\r\n            </md-chip-list>\r\n        </div>\r\n        <div class=\"padding-top-m\">\r\n            <md-progress-bar\r\n              color=\"primary\"\r\n              mode=\"determinate\"\r\n              [value]=\"percentageProgress\"\r\n              bufferValue=\"100\"></md-progress-bar>\r\n            <div>\r\n                {{percentageProgress}} %\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"taskActions\">\r\n        <button md-fab color=\"primary\" (click)=\"startTask()\" class=\"startTaskButton\" *ngIf=\"!startTime\">START</button>\r\n        <button md-fab color=\"warn\" (click)=\"stopTask()\" class=\"stopTaskButton\" *ngIf=\"startTime\">STOP!</button>\r\n        <div class=\"padding-top-s\">\r\n            To do {{task.duration}} min\r\n        </div>\r\n        <div class=\"padding-top-s\">\r\n            Done {{roundedTotalDuration}} min\r\n        </div>\r\n    </div>\r\n</md-card>"
+module.exports = "<mat-card class=\"taskItem\">\r\n    <div class=\"taskOrder font-size-l\">\r\n        <b>#{{task.order}}</b>\r\n    </div>\r\n\r\n    <div class=\"taskName\" (click)=\"showDescription = !showDescription\">\r\n        <div *ngIf=\"showDescription === false\">\r\n            <b>{{task.name}}</b>\r\n        </div>\r\n        <div *ngIf=\"showDescription === true\">\r\n            {{task.description}}\r\n        </div>\r\n        <div class=\"padding-top-m\">\r\n            <mat-chip-list>\r\n                <ng-template ngFor let-iTag [ngForOf]=\"task.tags\" let-tagIndex=\"index\">\r\n                    <tag [tagItem]=\"iTag\"></tag>\r\n                </ng-template>\r\n            </mat-chip-list>\r\n        </div>\r\n        <div class=\"padding-top-m\">\r\n            <mat-progress-bar\r\n              color=\"primary\"\r\n              mode=\"determinate\"\r\n              [value]=\"percentageProgress\"\r\n              bufferValue=\"100\"></mat-progress-bar>\r\n            <div>\r\n                {{percentageProgress}} %\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"taskActions\">\r\n        <button mat-fab color=\"primary\" (click)=\"startTask()\" class=\"startTaskButton\" *ngIf=\"!startTime\">START</button>\r\n        <button mat-fab color=\"warn\" (click)=\"stopTask()\" class=\"stopTaskButton\" *ngIf=\"startTime\">STOP!</button>\r\n        <div class=\"padding-top-s\">\r\n            To do {{task.duration}} min\r\n        </div>\r\n        <div class=\"padding-top-s\">\r\n            Done {{roundedTotalDuration}} min\r\n        </div>\r\n    </div>\r\n</mat-card>"
 
 /***/ }),
 

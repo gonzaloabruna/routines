@@ -54,6 +54,9 @@ export class RoutineDisplayerComponent implements OnInit {
     private getTodayTasks(): void {
         this.apiService.getTodayTasks().then((todayTasks: Array<ITaskModel>) => {
             this.listTasks = todayTasks;
+            if (this.listTasks.length === 0) {
+                return;
+            }
             this.totalMinsToStudy = this.listTasks.map((iRoutine) => {
                 if (iRoutine.timeSpent && iRoutine.timeSpent > 0) {
                     this.progressInMin += iRoutine.timeSpent;
