@@ -10,6 +10,15 @@ md-card-content {
     display: block;
 }
 
+mat-card {
+    display: block;
+    padding: 0px !important;
+}
+
+mat-card-content {
+    display: block;
+}
+
 .rotineItemCard {
     width: 600px;
 }
@@ -22,26 +31,101 @@ md-card-content {
     font-size: 1.5em;
 }
 
+
 .padding-top-s {
     padding-top: 0.5em;
 }
-
 .padding-top-m {
     padding-top: 1em;
 }
-
 .padding-top-l {
     padding-top: 1.5em;
+}
+.padding-top-xl {
+    padding-bottom: 2em;
 }
 
 .padding-bottom-s {
     padding-bottom: 0.5em;
 }
-
 .padding-bottom-m {
     padding-bottom: 1em;
 }
-
 .padding-bottom-l {
     padding-bottom: 1.5em;
+}
+.padding-bottom-xl {
+    padding-bottom: 2em;
+}
+
+.padding-left-s {
+    padding-left: 0.5em;
+}
+.padding-left-m {
+    padding-left: 1em;
+}
+.padding-left-l {
+    padding-left: 1.5em;
+}
+.padding-left-xl {
+    padding-left: 2em;
+}
+
+.padding-right-s {
+    padding-right: 0.5em;
+}
+.padding-right-m {
+    padding-right: 1em;
+}
+.padding-right-l {
+    padding-right: 1.5em;
+}
+.padding-right-xl {
+    padding-right: 2em;
+}
+
+
+.margin-top-s {
+    margin-top: 0.5em;
+}
+
+.margin-top-m {
+    margin-top: 1em;
+}
+
+.margin-top-l {
+    margin-top: 1.5em;
+}
+
+.margin-bottom-s {
+    margin-bottom: 0.5em;
+}
+
+.margin-bottom-m {
+    margin-bottom: 1em;
+}
+
+.margin-bottom-l {
+    margin-bottom: 1.5em;
+}
+
+.margin-left-s {
+    margin-left: 0.5em !important;
+}
+
+.margin-left-m {
+    margin-left: 1em;
+}
+
+.margin-left-l {
+    margin-left: 1.5em;
+}
+.margin-right-s {
+    margin-right: 0.5em;
+}
+.margin-right-m {
+    margin-right: 1em;
+}
+.margin-right-l {
+    margin-right: 1.5em;
 }

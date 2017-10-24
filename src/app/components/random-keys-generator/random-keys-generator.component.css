@@ -10,3 +10,11 @@
 .ramdomKeysContainer {
     text-align: center;
 }
+
+.randomSelection {
+    display: flex;
+}
+
+.selectOption {
+    width: 50%;
+}

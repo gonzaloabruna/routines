@@ -1,14 +1,14 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdInputModule, MdGridListModule,
-    MdProgressBarModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatInputModule, MatGridListModule,
+    MatProgressBarModule, MatSelectModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
 
 @NgModule({
   imports: [BrowserAnimationsModule,
-            MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdInputModule, MdProgressBarModule,
-            MdSelectModule, MdSlideToggleModule, MdTabsModule],
-  exports: [MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdInputModule, MdProgressBarModule,
-            MdSelectModule, MdSlideToggleModule, MdTabsModule]
+            MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatInputModule, MatProgressBarModule,
+            MatSelectModule, MatSlideToggleModule, MatTabsModule],
+  exports: [MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatInputModule, MatProgressBarModule,
+            MatSelectModule, MatSlideToggleModule, MatTabsModule]
 })
 
 export class AngularMaterialModule { }

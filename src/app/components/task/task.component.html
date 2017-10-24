@@ -1,4 +1,4 @@
-<md-card class="taskItem">
+<mat-card class="taskItem">
     <div class="taskOrder font-size-l">
         <b>#{{task.order}}</b>
     </div>
@@ -11,18 +11,18 @@
             {{task.description}}
         </div>
         <div class="padding-top-m">
-            <md-chip-list>
+            <mat-chip-list>
                 <ng-template ngFor let-iTag [ngForOf]="task.tags" let-tagIndex="index">
                     <tag [tagItem]="iTag"></tag>
                 </ng-template>
-            </md-chip-list>
+            </mat-chip-list>
         </div>
         <div class="padding-top-m">
-            <md-progress-bar
+            <mat-progress-bar
               color="primary"
               mode="determinate"
               [value]="percentageProgress"
-              bufferValue="100"></md-progress-bar>
+              bufferValue="100"></mat-progress-bar>
             <div>
                 {{percentageProgress}} %
             </div>
@@ -30,8 +30,8 @@
     </div>
 
     <div class="taskActions">
-        <button md-fab color="primary" (click)="startTask()" class="startTaskButton" *ngIf="!startTime">START</button>
-        <button md-fab color="warn" (click)="stopTask()" class="stopTaskButton" *ngIf="startTime">STOP!</button>
+        <button mat-fab color="primary" (click)="startTask()" class="startTaskButton" *ngIf="!startTime">START</button>
+        <button mat-fab color="warn" (click)="stopTask()" class="stopTaskButton" *ngIf="startTime">STOP!</button>
         <div class="padding-top-s">
             To do {{task.duration}} min
         </div>
@@ -39,4 +39,4 @@
             Done {{roundedTotalDuration}} min
         </div>
     </div>
-</md-card>
+</mat-card>

@@ -1,8 +1,8 @@
 <div class="mainContainer padding-top-m">
     <table>
         <tr>
-            <th md-sort-header="name">Task Name</th>
-            <th md-sort-header="timeSpent">Time spent (min)</th>
+            <th mat-sort-header="name">Task Name</th>
+            <th mat-sort-header="timeSpent">Time spent (min)</th>
         </tr>
         <tr *ngFor="let iTask of totalTasks">
             <td>{{iTask.name}}</td>

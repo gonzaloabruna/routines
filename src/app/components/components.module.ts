@@ -13,12 +13,13 @@ import { RoutineItemCreatorComponent } from './routine-item-creator/routine-item
 import { RoutineManagerComponent } from './routine-manager/routine-manager.component';
 import { TagComponent } from './tag/tag.component';
 import { ProgressChartComponent } from './progress-chart/progress-chart.component';
+import { ReadingTrainerComponent } from './reading-trainer/reading-trainer.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, AngularMaterialModule, ServicesModule ],
   declarations: [ ProgressChartComponent, RandomKeysGeneratorComponent, RoutineDisplayerComponent, TaskComponent,
-                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent ],
+                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent, ReadingTrainerComponent ],
   exports: [ ProgressChartComponent, RandomKeysGeneratorComponent, RoutineDisplayerComponent, TaskComponent,
-                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent ]
+                      RoutineItemCreatorComponent, RoutineManagerComponent, TagComponent, ReadingTrainerComponent ]
 })
 export class ComponentModule { }
