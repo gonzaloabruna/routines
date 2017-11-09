@@ -261,11 +261,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ProgressChartComponent = (function () {
     function ProgressChartComponent(apiService) {
         this.apiService = apiService;
-        this.SET_COLORS = ['#3f51b5', '#ff4081', '#f44336', '#009688', '#448AFF', '#448AFF', '#FFD740', '#FFAB40', '#795548',
+        this.SET_COLORS = ['#3f51b5', '#ff4081', '#f44336', '#009688', '#B2FF59', '#448AFF', '#FFD740', '#FFAB40', '#795548',
             '#B2FF59', '#AD1457', '#18FFFF', '#607D8B', '#E040FB', '#EEFF41', '#9E9D24', '#E91E63', '#4E342E'];
         this.allTasks = [];
-        this.totalTasks = [];
-        this.mapRoutineIdToIndexInArray = {};
         this.listDates = [];
         this.totalValues = [];
         this.arrayPositionOfDate = {};
@@ -278,8 +276,6 @@ var ProgressChartComponent = (function () {
     ProgressChartComponent.prototype.recalculate = function () {
         var _this = this;
         this.allTasks = [];
-        this.totalTasks = [];
-        this.mapRoutineIdToIndexInArray = {};
         this.listDates = [];
         this.totalValues = [];
         this.arrayPositionOfDate = {};
@@ -291,15 +287,7 @@ var ProgressChartComponent = (function () {
             });
             var minTaskDate = new Date();
             _this.allTasks.forEach(function (iTask) {
-                if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(_this.mapRoutineIdToIndexInArray[iTask.routineItem])) {
-                    var indexOfRoutine = _this.mapRoutineIdToIndexInArray[iTask.routineItem];
-                    _this.totalTasks[indexOfRoutine].timeSpent += iTask.timeSpent;
-                }
-                else {
-                    _this.mapRoutineIdToIndexInArray[iTask.routineItem] = _this.totalTasks.length;
-                    _this.totalTasks.push(iTask);
-                }
-                if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.taskDate) && new Date(iTask.taskDate) < minTaskDate) {
+                if (new Date(iTask.taskDate) < minTaskDate) {
                     minTaskDate = new Date(iTask.taskDate);
                 }
             });

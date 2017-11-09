@@ -16,12 +16,10 @@ import { ITaskModel } from '../../interfaces/taskModel.interface';
 export class ProgressChartComponent implements OnInit {
     @ViewChild('chartElement') chartElement: ElementRef;
 
-    SET_COLORS = ['#3f51b5', '#ff4081', '#f44336', '#009688', '#448AFF', '#448AFF', '#FFD740', '#FFAB40', '#795548',
+    SET_COLORS = ['#3f51b5', '#ff4081', '#f44336', '#009688', '#B2FF59', '#448AFF', '#FFD740', '#FFAB40', '#795548',
                         '#B2FF59', '#AD1457', '#18FFFF', '#607D8B', '#E040FB', '#EEFF41', '#9E9D24', '#E91E63', '#4E342E'];
 
     allTasks: Array<ITaskModel> = [];
-    totalTasks: Array<ITaskModel> = [];
-    mapRoutineIdToIndexInArray: any = {};
     listDates: Array<string> = [];
     totalValues: Array<number> = [];
     arrayPositionOfDate: any = {};
@@ -37,8 +35,6 @@ export class ProgressChartComponent implements OnInit {
 
     recalculate(): void {
         this.allTasks = [];
-        this.totalTasks = [];
-        this.mapRoutineIdToIndexInArray = {};
         this.listDates = [];
         this.totalValues = [];
         this.arrayPositionOfDate = {};
@@ -51,15 +47,7 @@ export class ProgressChartComponent implements OnInit {
             });
             let minTaskDate = new Date();
             this.allTasks.forEach((iTask) => {
-                if (check.assigned(this.mapRoutineIdToIndexInArray[iTask.routineItem])) {
-                    const indexOfRoutine = this.mapRoutineIdToIndexInArray[iTask.routineItem];
-                    this.totalTasks[indexOfRoutine].timeSpent += iTask.timeSpent;
-                } else {
-                    this.mapRoutineIdToIndexInArray[iTask.routineItem] = this.totalTasks.length;
-                    this.totalTasks.push(iTask);
-                }
-
-                if (check.assigned(iTask.taskDate) && new Date(iTask.taskDate) < minTaskDate) {
+                if (new Date(iTask.taskDate) < minTaskDate) {
                     minTaskDate = new Date(iTask.taskDate);
                 }
             });
@@ -78,7 +66,6 @@ export class ProgressChartComponent implements OnInit {
             const xValue = new Date(iTask.taskDate).toLocaleDateString();
             const indexPosition = this.arrayPositionOfDate[xValue];
             this.totalValues[indexPosition] = Math.ceil(this.totalValues[indexPosition] + iTask.timeSpent);
-
             if (check.not.assigned(this.objectOfLineCharts[iTask.routineItem])) {
                 this.objectOfLineCharts[iTask.routineItem] = this.initLineChart();
             }
