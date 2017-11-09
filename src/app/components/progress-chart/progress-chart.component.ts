@@ -27,6 +27,7 @@ export class ProgressChartComponent implements OnInit {
     idToLabel: any = {}; // Key: routineItem, Value: name
     idToTotal: any = {};
     listKeys: Array<string> = [];
+    grandTotal: number = 0;
     chart: any;
 
     constructor(private apiService: ApiService) {}
@@ -44,6 +45,7 @@ export class ProgressChartComponent implements OnInit {
         this.idToLabel = {};
         this.idToTotal = {};
         this.listKeys = [];
+        this.grandTotal = 0;
 
         this.apiService.getTasks({_id: {'$ne': null}}).then((allTaskResult: Array<ITaskModel>) => {
             this.allTasks = allTaskResult.filter((iTask) => {
@@ -78,9 +80,11 @@ export class ProgressChartComponent implements OnInit {
                 this.idToTotal[iTask.routineItem] = 0;
             }
             this.idToTotal[iTask.routineItem] = Math.ceil(this.idToTotal[iTask.routineItem] + iTask.timeSpent);
+            this.grandTotal += iTask.timeSpent;
             this.idToLabel[iTask.routineItem] = iTask.name;
             this.objectOfLineCharts[iTask.routineItem][indexPosition] = Math.ceil(this.objectOfLineCharts[iTask.routineItem][indexPosition] + iTask.timeSpent);
         });
+        this.grandTotal = Math.ceil(this.grandTotal / 60);
 
         const totalDataset = {
             label: 'TOTAL',

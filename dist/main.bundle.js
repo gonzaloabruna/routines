@@ -230,7 +230,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/progress-chart/progress-chart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mainContainer\">\r\n    <div class=\"padding-top-m\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculate()\" class=\"margin-left-s\">REFRESH</button>\r\n    </div>\r\n\r\n    <div class=\"padding-top-l\">\r\n        <canvas #chartElement class=\"chartContainer\"></canvas>\r\n    </div>\r\n\r\n    <div class=\"center-table\">\r\n        <table class=\"padding-top-m zui-table zui-table-zebra zui-table-horizontal\">\r\n            <thead>\r\n                <tr>\r\n                    <th mat-sort-header=\"name\">Task Name</th>\r\n                    <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr *ngFor=\"let iKey of listKeys\">\r\n                    <td>{{idToLabel[iKey]}}</td>\r\n                    <td>{{idToTotal[iKey]}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"mainContainer\">\r\n    <div class=\"padding-top-m\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculate()\" class=\"margin-left-s\">REFRESH</button>\r\n    </div>\r\n\r\n    <div class=\"padding-top-l\">\r\n        <canvas #chartElement class=\"chartContainer\"></canvas>\r\n    </div>\r\n\r\n    <div class=\"center-table\">\r\n        <br />\r\n        <b>TOTAL {{grandTotal}}h</b>\r\n        <br />\r\n\r\n        <table class=\"padding-top-m zui-table zui-table-zebra zui-table-horizontal\">\r\n            <thead>\r\n                <tr>\r\n                    <th mat-sort-header=\"name\">Task Name</th>\r\n                    <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr *ngFor=\"let iKey of listKeys\">\r\n                    <td>{{idToLabel[iKey]}}</td>\r\n                    <td>{{idToTotal[iKey]}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -271,6 +271,7 @@ var ProgressChartComponent = (function () {
         this.idToLabel = {}; // Key: routineItem, Value: name
         this.idToTotal = {};
         this.listKeys = [];
+        this.grandTotal = 0;
     }
     ProgressChartComponent.prototype.ngOnInit = function () {
         this.recalculate();
@@ -285,6 +286,7 @@ var ProgressChartComponent = (function () {
         this.idToLabel = {};
         this.idToTotal = {};
         this.listKeys = [];
+        this.grandTotal = 0;
         this.apiService.getTasks({ _id: { '$ne': null } }).then(function (allTaskResult) {
             _this.allTasks = allTaskResult.filter(function (iTask) {
                 return __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.taskDate) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.timeSpent) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.number(iTask.timeSpent) && iTask.timeSpent > 0;
@@ -318,9 +320,11 @@ var ProgressChartComponent = (function () {
                 _this.idToTotal[iTask.routineItem] = 0;
             }
             _this.idToTotal[iTask.routineItem] = Math.ceil(_this.idToTotal[iTask.routineItem] + iTask.timeSpent);
+            _this.grandTotal += iTask.timeSpent;
             _this.idToLabel[iTask.routineItem] = iTask.name;
             _this.objectOfLineCharts[iTask.routineItem][indexPosition] = Math.ceil(_this.objectOfLineCharts[iTask.routineItem][indexPosition] + iTask.timeSpent);
         });
+        this.grandTotal = Math.ceil(this.grandTotal / 60);
         var totalDataset = {
             label: 'TOTAL',
             data: this.totalValues
