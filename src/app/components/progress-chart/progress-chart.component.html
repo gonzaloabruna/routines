@@ -1,5 +1,13 @@
-<div class="mainContainer padding-top-m">
-    <table>
+<div class="mainContainer">
+    <div class="padding-top-m">
+        <button mat-raised-button color="primary" (click)="recalculate()" class="margin-left-s">REFRESH</button>
+    </div>
+
+    <div class="padding-top-l">
+        <canvas #chartElement class="chartContainer"></canvas>
+    </div>
+
+    <table class="padding-top-m">
         <tr>
             <th mat-sort-header="name">Task Name</th>
             <th mat-sort-header="timeSpent">Time spent (min)</th>

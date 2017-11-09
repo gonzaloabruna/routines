@@ -217,7 +217,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".mainContainer {\r\n    text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, ".mainContainer {\r\n    text-align: center;\r\n}\r\n\r\n.chartContainer{\r\n    height: 25em !important;\r\n}\r\n", ""]);
 
 // exports
 
@@ -230,7 +230,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/progress-chart/progress-chart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mainContainer padding-top-m\">\r\n    <table>\r\n        <tr>\r\n            <th mat-sort-header=\"name\">Task Name</th>\r\n            <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n        </tr>\r\n        <tr *ngFor=\"let iTask of totalTasks\">\r\n            <td>{{iTask.name}}</td>\r\n            <td>{{iTask.timeSpent}}</td>\r\n        </tr>\r\n    </table>\r\n</div>"
+module.exports = "<div class=\"mainContainer\">\r\n    <div class=\"padding-top-m\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculate()\" class=\"margin-left-s\">REFRESH</button>\r\n    </div>\r\n\r\n    <div class=\"padding-top-l\">\r\n        <canvas #chartElement class=\"chartContainer\"></canvas>\r\n    </div>\r\n\r\n    <table class=\"padding-top-m\">\r\n        <tr>\r\n            <th mat-sort-header=\"name\">Task Name</th>\r\n            <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n        </tr>\r\n        <tr *ngFor=\"let iTask of totalTasks\">\r\n            <td>{{iTask.name}}</td>\r\n            <td>{{iTask.timeSpent}}</td>\r\n        </tr>\r\n    </table>\r\n</div>"
 
 /***/ }),
 
@@ -242,7 +242,9 @@ module.exports = "<div class=\"mainContainer padding-top-m\">\r\n    <table>\r\n
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_check_types__ = __webpack_require__("../../../../check-types/src/check-types.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_check_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_check_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_api_service__ = __webpack_require__("../../../../../src/app/services/api.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chart_js__ = __webpack_require__("../../../../chart.js/src/chart.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chart_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chart_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_api_service__ = __webpack_require__("../../../../../src/app/services/api.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -255,19 +257,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProgressChartComponent = (function () {
     function ProgressChartComponent(apiService) {
         this.apiService = apiService;
+        this.SET_COLORS = ['#3f51b5', '#ff4081', '#f44336', '#009688', '#448AFF', '#448AFF', '#FFD740', '#FFAB40', '#795548',
+            '#B2FF59', '#AD1457', '#18FFFF', '#607D8B', '#E040FB', '#EEFF41', '#9E9D24', '#E91E63', '#4E342E'];
         this.allTasks = [];
         this.totalTasks = [];
         this.mapRoutineIdToIndexInArray = {};
-        this.recalculate();
+        this.listDates = [];
+        this.totalValues = [];
+        this.arrayPositionOfDate = {};
+        this.objectOfLineCharts = {};
+        this.idToLabel = {}; // Key: routineItem, Value: name
     }
+    ProgressChartComponent.prototype.ngOnInit = function () {
+        this.recalculate();
+    };
     ProgressChartComponent.prototype.recalculate = function () {
         var _this = this;
+        this.allTasks = [];
+        this.totalTasks = [];
+        this.mapRoutineIdToIndexInArray = {};
+        this.listDates = [];
+        this.totalValues = [];
+        this.arrayPositionOfDate = {};
+        this.objectOfLineCharts = {};
+        this.idToLabel = {};
         this.apiService.getTasks({ _id: { '$ne': null } }).then(function (allTaskResult) {
-            _this.allTasks = allTaskResult;
-            allTaskResult.forEach(function (iTask) {
+            _this.allTasks = allTaskResult.filter(function (iTask) {
+                return __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.taskDate) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.timeSpent) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.number(iTask.timeSpent) && iTask.timeSpent > 0;
+            });
+            var minTaskDate = new Date();
+            _this.allTasks.forEach(function (iTask) {
                 if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(_this.mapRoutineIdToIndexInArray[iTask.routineItem])) {
                     var indexOfRoutine = _this.mapRoutineIdToIndexInArray[iTask.routineItem];
                     _this.totalTasks[indexOfRoutine].timeSpent += iTask.timeSpent;
@@ -276,24 +299,122 @@ var ProgressChartComponent = (function () {
                     _this.mapRoutineIdToIndexInArray[iTask.routineItem] = _this.totalTasks.length;
                     _this.totalTasks.push(iTask);
                 }
+                if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.taskDate) && new Date(iTask.taskDate) < minTaskDate) {
+                    minTaskDate = new Date(iTask.taskDate);
+                }
             });
+            _this.buildListDates(minTaskDate);
+            _this.buildChart();
         }).catch(function (error) {
             // TODO handle error
             console.log(error);
         });
     };
+    ProgressChartComponent.prototype.buildChart = function () {
+        var _this = this;
+        this.objectOfLineCharts = {};
+        this.totalValues = this.initLineChart();
+        this.allTasks.forEach(function (iTask) {
+            var xValue = new Date(iTask.taskDate).toLocaleDateString();
+            var indexPosition = _this.arrayPositionOfDate[xValue];
+            _this.totalValues[indexPosition] = Math.ceil(_this.totalValues[indexPosition] + iTask.timeSpent);
+            if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.not.assigned(_this.objectOfLineCharts[iTask.routineItem])) {
+                _this.objectOfLineCharts[iTask.routineItem] = _this.initLineChart();
+            }
+            _this.idToLabel[iTask.routineItem] = iTask.name;
+            _this.objectOfLineCharts[iTask.routineItem][indexPosition] = Math.ceil(_this.objectOfLineCharts[iTask.routineItem][indexPosition] + iTask.timeSpent);
+        });
+        var totalDataset = {
+            label: 'TOTAL',
+            data: this.totalValues
+        };
+        // Total values will be in a bar chart, the others will be in lines
+        var lineDatasets = [];
+        Object.keys(this.objectOfLineCharts).forEach(function (iLineKey, index) {
+            var datasetLabel = _this.idToLabel[iLineKey];
+            var datasetData = _this.objectOfLineCharts[iLineKey];
+            lineDatasets.push({
+                label: datasetLabel,
+                data: datasetData,
+                type: 'line',
+                fill: false,
+                borderColor: index < _this.SET_COLORS.length ? _this.SET_COLORS[index] : _this.SET_COLORS[0]
+            });
+        });
+        var allDatasets = [totalDataset].concat(lineDatasets);
+        // Start drawing of chart:
+        var chartCtx = this.chartElement.nativeElement.getContext('2d');
+        if (!this.chart) {
+            this.chart = new __WEBPACK_IMPORTED_MODULE_2_chart_js___default.a(chartCtx, {
+                type: 'bar',
+                data: {
+                    datasets: allDatasets,
+                    labels: this.listDates
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'min'
+                                }
+                            }]
+                    },
+                    animation: {
+                        duration: 100,
+                        easing: 'linear'
+                    }
+                }
+            });
+        }
+        else {
+            this.chart.data.datasets = allDatasets;
+            this.chart.data.labels = this.listDates;
+            this.chart.update();
+        }
+    };
+    ProgressChartComponent.prototype.buildListDates = function (startDate) {
+        this.arrayPositionOfDate = {};
+        this.listDates = [];
+        var auxDate = startDate;
+        var today = new Date();
+        var index = 0;
+        while (auxDate <= today) {
+            this.listDates.push(auxDate.toLocaleDateString());
+            this.arrayPositionOfDate[auxDate.toLocaleDateString()] = index;
+            auxDate.setDate(auxDate.getDate() + 1);
+            index++;
+        }
+        this.listDates.push(today.toLocaleDateString());
+        this.arrayPositionOfDate[today.toLocaleDateString()] = index;
+    };
+    ProgressChartComponent.prototype.initLineChart = function () {
+        var result = this.listDates.map(function (iDate) {
+            return 0;
+        });
+        return result;
+    };
     return ProgressChartComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('chartElement'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
+], ProgressChartComponent.prototype, "chartElement", void 0);
 ProgressChartComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'progress-chart',
         template: __webpack_require__("../../../../../src/app/components/progress-chart/progress-chart.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/progress-chart/progress-chart.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_api_service__["a" /* ApiService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_api_service__["a" /* ApiService */]) === "function" && _b || Object])
 ], ProgressChartComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=progress-chart.component.js.map
 
 /***/ }),
@@ -1643,6 +1764,259 @@ if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment *
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ "../../../../moment/locale recursive ^\\.\\/.*$":
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": "../../../../moment/locale/af.js",
+	"./af.js": "../../../../moment/locale/af.js",
+	"./ar": "../../../../moment/locale/ar.js",
+	"./ar-dz": "../../../../moment/locale/ar-dz.js",
+	"./ar-dz.js": "../../../../moment/locale/ar-dz.js",
+	"./ar-kw": "../../../../moment/locale/ar-kw.js",
+	"./ar-kw.js": "../../../../moment/locale/ar-kw.js",
+	"./ar-ly": "../../../../moment/locale/ar-ly.js",
+	"./ar-ly.js": "../../../../moment/locale/ar-ly.js",
+	"./ar-ma": "../../../../moment/locale/ar-ma.js",
+	"./ar-ma.js": "../../../../moment/locale/ar-ma.js",
+	"./ar-sa": "../../../../moment/locale/ar-sa.js",
+	"./ar-sa.js": "../../../../moment/locale/ar-sa.js",
+	"./ar-tn": "../../../../moment/locale/ar-tn.js",
+	"./ar-tn.js": "../../../../moment/locale/ar-tn.js",
+	"./ar.js": "../../../../moment/locale/ar.js",
+	"./az": "../../../../moment/locale/az.js",
+	"./az.js": "../../../../moment/locale/az.js",
+	"./be": "../../../../moment/locale/be.js",
+	"./be.js": "../../../../moment/locale/be.js",
+	"./bg": "../../../../moment/locale/bg.js",
+	"./bg.js": "../../../../moment/locale/bg.js",
+	"./bn": "../../../../moment/locale/bn.js",
+	"./bn.js": "../../../../moment/locale/bn.js",
+	"./bo": "../../../../moment/locale/bo.js",
+	"./bo.js": "../../../../moment/locale/bo.js",
+	"./br": "../../../../moment/locale/br.js",
+	"./br.js": "../../../../moment/locale/br.js",
+	"./bs": "../../../../moment/locale/bs.js",
+	"./bs.js": "../../../../moment/locale/bs.js",
+	"./ca": "../../../../moment/locale/ca.js",
+	"./ca.js": "../../../../moment/locale/ca.js",
+	"./cs": "../../../../moment/locale/cs.js",
+	"./cs.js": "../../../../moment/locale/cs.js",
+	"./cv": "../../../../moment/locale/cv.js",
+	"./cv.js": "../../../../moment/locale/cv.js",
+	"./cy": "../../../../moment/locale/cy.js",
+	"./cy.js": "../../../../moment/locale/cy.js",
+	"./da": "../../../../moment/locale/da.js",
+	"./da.js": "../../../../moment/locale/da.js",
+	"./de": "../../../../moment/locale/de.js",
+	"./de-at": "../../../../moment/locale/de-at.js",
+	"./de-at.js": "../../../../moment/locale/de-at.js",
+	"./de-ch": "../../../../moment/locale/de-ch.js",
+	"./de-ch.js": "../../../../moment/locale/de-ch.js",
+	"./de.js": "../../../../moment/locale/de.js",
+	"./dv": "../../../../moment/locale/dv.js",
+	"./dv.js": "../../../../moment/locale/dv.js",
+	"./el": "../../../../moment/locale/el.js",
+	"./el.js": "../../../../moment/locale/el.js",
+	"./en-au": "../../../../moment/locale/en-au.js",
+	"./en-au.js": "../../../../moment/locale/en-au.js",
+	"./en-ca": "../../../../moment/locale/en-ca.js",
+	"./en-ca.js": "../../../../moment/locale/en-ca.js",
+	"./en-gb": "../../../../moment/locale/en-gb.js",
+	"./en-gb.js": "../../../../moment/locale/en-gb.js",
+	"./en-ie": "../../../../moment/locale/en-ie.js",
+	"./en-ie.js": "../../../../moment/locale/en-ie.js",
+	"./en-nz": "../../../../moment/locale/en-nz.js",
+	"./en-nz.js": "../../../../moment/locale/en-nz.js",
+	"./eo": "../../../../moment/locale/eo.js",
+	"./eo.js": "../../../../moment/locale/eo.js",
+	"./es": "../../../../moment/locale/es.js",
+	"./es-do": "../../../../moment/locale/es-do.js",
+	"./es-do.js": "../../../../moment/locale/es-do.js",
+	"./es.js": "../../../../moment/locale/es.js",
+	"./et": "../../../../moment/locale/et.js",
+	"./et.js": "../../../../moment/locale/et.js",
+	"./eu": "../../../../moment/locale/eu.js",
+	"./eu.js": "../../../../moment/locale/eu.js",
+	"./fa": "../../../../moment/locale/fa.js",
+	"./fa.js": "../../../../moment/locale/fa.js",
+	"./fi": "../../../../moment/locale/fi.js",
+	"./fi.js": "../../../../moment/locale/fi.js",
+	"./fo": "../../../../moment/locale/fo.js",
+	"./fo.js": "../../../../moment/locale/fo.js",
+	"./fr": "../../../../moment/locale/fr.js",
+	"./fr-ca": "../../../../moment/locale/fr-ca.js",
+	"./fr-ca.js": "../../../../moment/locale/fr-ca.js",
+	"./fr-ch": "../../../../moment/locale/fr-ch.js",
+	"./fr-ch.js": "../../../../moment/locale/fr-ch.js",
+	"./fr.js": "../../../../moment/locale/fr.js",
+	"./fy": "../../../../moment/locale/fy.js",
+	"./fy.js": "../../../../moment/locale/fy.js",
+	"./gd": "../../../../moment/locale/gd.js",
+	"./gd.js": "../../../../moment/locale/gd.js",
+	"./gl": "../../../../moment/locale/gl.js",
+	"./gl.js": "../../../../moment/locale/gl.js",
+	"./gom-latn": "../../../../moment/locale/gom-latn.js",
+	"./gom-latn.js": "../../../../moment/locale/gom-latn.js",
+	"./he": "../../../../moment/locale/he.js",
+	"./he.js": "../../../../moment/locale/he.js",
+	"./hi": "../../../../moment/locale/hi.js",
+	"./hi.js": "../../../../moment/locale/hi.js",
+	"./hr": "../../../../moment/locale/hr.js",
+	"./hr.js": "../../../../moment/locale/hr.js",
+	"./hu": "../../../../moment/locale/hu.js",
+	"./hu.js": "../../../../moment/locale/hu.js",
+	"./hy-am": "../../../../moment/locale/hy-am.js",
+	"./hy-am.js": "../../../../moment/locale/hy-am.js",
+	"./id": "../../../../moment/locale/id.js",
+	"./id.js": "../../../../moment/locale/id.js",
+	"./is": "../../../../moment/locale/is.js",
+	"./is.js": "../../../../moment/locale/is.js",
+	"./it": "../../../../moment/locale/it.js",
+	"./it.js": "../../../../moment/locale/it.js",
+	"./ja": "../../../../moment/locale/ja.js",
+	"./ja.js": "../../../../moment/locale/ja.js",
+	"./jv": "../../../../moment/locale/jv.js",
+	"./jv.js": "../../../../moment/locale/jv.js",
+	"./ka": "../../../../moment/locale/ka.js",
+	"./ka.js": "../../../../moment/locale/ka.js",
+	"./kk": "../../../../moment/locale/kk.js",
+	"./kk.js": "../../../../moment/locale/kk.js",
+	"./km": "../../../../moment/locale/km.js",
+	"./km.js": "../../../../moment/locale/km.js",
+	"./kn": "../../../../moment/locale/kn.js",
+	"./kn.js": "../../../../moment/locale/kn.js",
+	"./ko": "../../../../moment/locale/ko.js",
+	"./ko.js": "../../../../moment/locale/ko.js",
+	"./ky": "../../../../moment/locale/ky.js",
+	"./ky.js": "../../../../moment/locale/ky.js",
+	"./lb": "../../../../moment/locale/lb.js",
+	"./lb.js": "../../../../moment/locale/lb.js",
+	"./lo": "../../../../moment/locale/lo.js",
+	"./lo.js": "../../../../moment/locale/lo.js",
+	"./lt": "../../../../moment/locale/lt.js",
+	"./lt.js": "../../../../moment/locale/lt.js",
+	"./lv": "../../../../moment/locale/lv.js",
+	"./lv.js": "../../../../moment/locale/lv.js",
+	"./me": "../../../../moment/locale/me.js",
+	"./me.js": "../../../../moment/locale/me.js",
+	"./mi": "../../../../moment/locale/mi.js",
+	"./mi.js": "../../../../moment/locale/mi.js",
+	"./mk": "../../../../moment/locale/mk.js",
+	"./mk.js": "../../../../moment/locale/mk.js",
+	"./ml": "../../../../moment/locale/ml.js",
+	"./ml.js": "../../../../moment/locale/ml.js",
+	"./mr": "../../../../moment/locale/mr.js",
+	"./mr.js": "../../../../moment/locale/mr.js",
+	"./ms": "../../../../moment/locale/ms.js",
+	"./ms-my": "../../../../moment/locale/ms-my.js",
+	"./ms-my.js": "../../../../moment/locale/ms-my.js",
+	"./ms.js": "../../../../moment/locale/ms.js",
+	"./my": "../../../../moment/locale/my.js",
+	"./my.js": "../../../../moment/locale/my.js",
+	"./nb": "../../../../moment/locale/nb.js",
+	"./nb.js": "../../../../moment/locale/nb.js",
+	"./ne": "../../../../moment/locale/ne.js",
+	"./ne.js": "../../../../moment/locale/ne.js",
+	"./nl": "../../../../moment/locale/nl.js",
+	"./nl-be": "../../../../moment/locale/nl-be.js",
+	"./nl-be.js": "../../../../moment/locale/nl-be.js",
+	"./nl.js": "../../../../moment/locale/nl.js",
+	"./nn": "../../../../moment/locale/nn.js",
+	"./nn.js": "../../../../moment/locale/nn.js",
+	"./pa-in": "../../../../moment/locale/pa-in.js",
+	"./pa-in.js": "../../../../moment/locale/pa-in.js",
+	"./pl": "../../../../moment/locale/pl.js",
+	"./pl.js": "../../../../moment/locale/pl.js",
+	"./pt": "../../../../moment/locale/pt.js",
+	"./pt-br": "../../../../moment/locale/pt-br.js",
+	"./pt-br.js": "../../../../moment/locale/pt-br.js",
+	"./pt.js": "../../../../moment/locale/pt.js",
+	"./ro": "../../../../moment/locale/ro.js",
+	"./ro.js": "../../../../moment/locale/ro.js",
+	"./ru": "../../../../moment/locale/ru.js",
+	"./ru.js": "../../../../moment/locale/ru.js",
+	"./sd": "../../../../moment/locale/sd.js",
+	"./sd.js": "../../../../moment/locale/sd.js",
+	"./se": "../../../../moment/locale/se.js",
+	"./se.js": "../../../../moment/locale/se.js",
+	"./si": "../../../../moment/locale/si.js",
+	"./si.js": "../../../../moment/locale/si.js",
+	"./sk": "../../../../moment/locale/sk.js",
+	"./sk.js": "../../../../moment/locale/sk.js",
+	"./sl": "../../../../moment/locale/sl.js",
+	"./sl.js": "../../../../moment/locale/sl.js",
+	"./sq": "../../../../moment/locale/sq.js",
+	"./sq.js": "../../../../moment/locale/sq.js",
+	"./sr": "../../../../moment/locale/sr.js",
+	"./sr-cyrl": "../../../../moment/locale/sr-cyrl.js",
+	"./sr-cyrl.js": "../../../../moment/locale/sr-cyrl.js",
+	"./sr.js": "../../../../moment/locale/sr.js",
+	"./ss": "../../../../moment/locale/ss.js",
+	"./ss.js": "../../../../moment/locale/ss.js",
+	"./sv": "../../../../moment/locale/sv.js",
+	"./sv.js": "../../../../moment/locale/sv.js",
+	"./sw": "../../../../moment/locale/sw.js",
+	"./sw.js": "../../../../moment/locale/sw.js",
+	"./ta": "../../../../moment/locale/ta.js",
+	"./ta.js": "../../../../moment/locale/ta.js",
+	"./te": "../../../../moment/locale/te.js",
+	"./te.js": "../../../../moment/locale/te.js",
+	"./tet": "../../../../moment/locale/tet.js",
+	"./tet.js": "../../../../moment/locale/tet.js",
+	"./th": "../../../../moment/locale/th.js",
+	"./th.js": "../../../../moment/locale/th.js",
+	"./tl-ph": "../../../../moment/locale/tl-ph.js",
+	"./tl-ph.js": "../../../../moment/locale/tl-ph.js",
+	"./tlh": "../../../../moment/locale/tlh.js",
+	"./tlh.js": "../../../../moment/locale/tlh.js",
+	"./tr": "../../../../moment/locale/tr.js",
+	"./tr.js": "../../../../moment/locale/tr.js",
+	"./tzl": "../../../../moment/locale/tzl.js",
+	"./tzl.js": "../../../../moment/locale/tzl.js",
+	"./tzm": "../../../../moment/locale/tzm.js",
+	"./tzm-latn": "../../../../moment/locale/tzm-latn.js",
+	"./tzm-latn.js": "../../../../moment/locale/tzm-latn.js",
+	"./tzm.js": "../../../../moment/locale/tzm.js",
+	"./uk": "../../../../moment/locale/uk.js",
+	"./uk.js": "../../../../moment/locale/uk.js",
+	"./ur": "../../../../moment/locale/ur.js",
+	"./ur.js": "../../../../moment/locale/ur.js",
+	"./uz": "../../../../moment/locale/uz.js",
+	"./uz-latn": "../../../../moment/locale/uz-latn.js",
+	"./uz-latn.js": "../../../../moment/locale/uz-latn.js",
+	"./uz.js": "../../../../moment/locale/uz.js",
+	"./vi": "../../../../moment/locale/vi.js",
+	"./vi.js": "../../../../moment/locale/vi.js",
+	"./x-pseudo": "../../../../moment/locale/x-pseudo.js",
+	"./x-pseudo.js": "../../../../moment/locale/x-pseudo.js",
+	"./yo": "../../../../moment/locale/yo.js",
+	"./yo.js": "../../../../moment/locale/yo.js",
+	"./zh-cn": "../../../../moment/locale/zh-cn.js",
+	"./zh-cn.js": "../../../../moment/locale/zh-cn.js",
+	"./zh-hk": "../../../../moment/locale/zh-hk.js",
+	"./zh-hk.js": "../../../../moment/locale/zh-hk.js",
+	"./zh-tw": "../../../../moment/locale/zh-tw.js",
+	"./zh-tw.js": "../../../../moment/locale/zh-tw.js"
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "../../../../moment/locale recursive ^\\.\\/.*$";
 
 /***/ }),
 
