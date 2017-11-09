@@ -7,14 +7,20 @@
         <canvas #chartElement class="chartContainer"></canvas>
     </div>
 
-    <table class="padding-top-m">
-        <tr>
-            <th mat-sort-header="name">Task Name</th>
-            <th mat-sort-header="timeSpent">Time spent (min)</th>
-        </tr>
-        <tr *ngFor="let iTask of totalTasks">
-            <td>{{iTask.name}}</td>
-            <td>{{iTask.timeSpent}}</td>
-        </tr>
-    </table>
+    <div class="center-table">
+        <table class="padding-top-m zui-table zui-table-zebra zui-table-horizontal">
+            <thead>
+                <tr>
+                    <th mat-sort-header="name">Task Name</th>
+                    <th mat-sort-header="timeSpent">Time spent (min)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let iKey of listKeys">
+                    <td>{{idToLabel[iKey]}}</td>
+                    <td>{{idToTotal[iKey]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

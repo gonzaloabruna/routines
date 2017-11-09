@@ -25,6 +25,8 @@ export class ProgressChartComponent implements OnInit {
     arrayPositionOfDate: any = {};
     objectOfLineCharts: any = {};
     idToLabel: any = {}; // Key: routineItem, Value: name
+    idToTotal: any = {};
+    listKeys: Array<string> = [];
     chart: any;
 
     constructor(private apiService: ApiService) {}
@@ -40,6 +42,8 @@ export class ProgressChartComponent implements OnInit {
         this.arrayPositionOfDate = {};
         this.objectOfLineCharts = {};
         this.idToLabel = {};
+        this.idToTotal = {};
+        this.listKeys = [];
 
         this.apiService.getTasks({_id: {'$ne': null}}).then((allTaskResult: Array<ITaskModel>) => {
             this.allTasks = allTaskResult.filter((iTask) => {
@@ -69,6 +73,11 @@ export class ProgressChartComponent implements OnInit {
             if (check.not.assigned(this.objectOfLineCharts[iTask.routineItem])) {
                 this.objectOfLineCharts[iTask.routineItem] = this.initLineChart();
             }
+            if (check.not.includes(this.listKeys, iTask.routineItem)) {
+                this.listKeys.push(iTask.routineItem);
+                this.idToTotal[iTask.routineItem] = 0;
+            }
+            this.idToTotal[iTask.routineItem] = Math.ceil(this.idToTotal[iTask.routineItem] + iTask.timeSpent);
             this.idToLabel[iTask.routineItem] = iTask.name;
             this.objectOfLineCharts[iTask.routineItem][indexPosition] = Math.ceil(this.objectOfLineCharts[iTask.routineItem][indexPosition] + iTask.timeSpent);
         });

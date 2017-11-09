@@ -217,7 +217,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".mainContainer {\r\n    text-align: center;\r\n}\r\n\r\n.chartContainer{\r\n    height: 25em !important;\r\n}\r\n", ""]);
+exports.push([module.i, ".mainContainer {\r\n    text-align: center;\r\n}\r\n\r\n.chartContainer{\r\n    height: 25em !important;\r\n}\r\n\r\n.zui-table {\r\n    border: solid 1px #DDEEEE;\r\n    border-collapse: collapse;\r\n    border-spacing: 0;\r\n    font: normal 13px Arial, sans-serif;\r\n}\r\n.zui-table thead th {\r\n    background-color: #DDEFEF;\r\n    border: solid 1px #DDEEEE;\r\n    color: #336B6B;\r\n    padding: 10px;\r\n    text-align: left;\r\n    text-shadow: 1px 1px 1px #fff;\r\n}\r\n.zui-table tbody td {\r\n    border: solid 1px #DDEEEE;\r\n    color: #333;\r\n    padding: 10px;\r\n    text-shadow: 1px 1px 1px #fff;\r\n}\r\n.zui-table-zebra tbody tr:nth-child(odd) {\r\n    background-color: #fff;\r\n}\r\n.zui-table-zebra tbody tr:nth-child(even) {\r\n    background-color: #EEF7EE;\r\n}\r\n.zui-table-horizontal tbody td {\r\n    border-left: none;\r\n    border-right: none;\r\n}\r\n", ""]);
 
 // exports
 
@@ -230,7 +230,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/progress-chart/progress-chart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mainContainer\">\r\n    <div class=\"padding-top-m\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculate()\" class=\"margin-left-s\">REFRESH</button>\r\n    </div>\r\n\r\n    <div class=\"padding-top-l\">\r\n        <canvas #chartElement class=\"chartContainer\"></canvas>\r\n    </div>\r\n\r\n    <table class=\"padding-top-m\">\r\n        <tr>\r\n            <th mat-sort-header=\"name\">Task Name</th>\r\n            <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n        </tr>\r\n        <tr *ngFor=\"let iTask of totalTasks\">\r\n            <td>{{iTask.name}}</td>\r\n            <td>{{iTask.timeSpent}}</td>\r\n        </tr>\r\n    </table>\r\n</div>"
+module.exports = "<div class=\"mainContainer\">\r\n    <div class=\"padding-top-m\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"recalculate()\" class=\"margin-left-s\">REFRESH</button>\r\n    </div>\r\n\r\n    <div class=\"padding-top-l\">\r\n        <canvas #chartElement class=\"chartContainer\"></canvas>\r\n    </div>\r\n\r\n    <div class=\"center-table\">\r\n        <table class=\"padding-top-m zui-table zui-table-zebra zui-table-horizontal\">\r\n            <thead>\r\n                <tr>\r\n                    <th mat-sort-header=\"name\">Task Name</th>\r\n                    <th mat-sort-header=\"timeSpent\">Time spent (min)</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr *ngFor=\"let iKey of listKeys\">\r\n                    <td>{{idToLabel[iKey]}}</td>\r\n                    <td>{{idToTotal[iKey]}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -269,6 +269,8 @@ var ProgressChartComponent = (function () {
         this.arrayPositionOfDate = {};
         this.objectOfLineCharts = {};
         this.idToLabel = {}; // Key: routineItem, Value: name
+        this.idToTotal = {};
+        this.listKeys = [];
     }
     ProgressChartComponent.prototype.ngOnInit = function () {
         this.recalculate();
@@ -281,6 +283,8 @@ var ProgressChartComponent = (function () {
         this.arrayPositionOfDate = {};
         this.objectOfLineCharts = {};
         this.idToLabel = {};
+        this.idToTotal = {};
+        this.listKeys = [];
         this.apiService.getTasks({ _id: { '$ne': null } }).then(function (allTaskResult) {
             _this.allTasks = allTaskResult.filter(function (iTask) {
                 return __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.taskDate) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.assigned(iTask.timeSpent) && __WEBPACK_IMPORTED_MODULE_1_check_types___default.a.number(iTask.timeSpent) && iTask.timeSpent > 0;
@@ -309,6 +313,11 @@ var ProgressChartComponent = (function () {
             if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.not.assigned(_this.objectOfLineCharts[iTask.routineItem])) {
                 _this.objectOfLineCharts[iTask.routineItem] = _this.initLineChart();
             }
+            if (__WEBPACK_IMPORTED_MODULE_1_check_types___default.a.not.includes(_this.listKeys, iTask.routineItem)) {
+                _this.listKeys.push(iTask.routineItem);
+                _this.idToTotal[iTask.routineItem] = 0;
+            }
+            _this.idToTotal[iTask.routineItem] = Math.ceil(_this.idToTotal[iTask.routineItem] + iTask.timeSpent);
             _this.idToLabel[iTask.routineItem] = iTask.name;
             _this.objectOfLineCharts[iTask.routineItem][indexPosition] = Math.ceil(_this.objectOfLineCharts[iTask.routineItem][indexPosition] + iTask.timeSpent);
         });
